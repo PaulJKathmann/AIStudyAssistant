@@ -1,0 +1,107 @@
+<nav class="navbar navbar-expand-lg navbar-dark" style="background-color: #581B98;">
+    <a class="navbar-brand" href="{{url_for('use_chatbot')}}">Chatfriend</a>
+    <button class="navbar-toggler" type="button" data-toggle="collapse" data-target="#navbarNavAltMarkup" aria-controls="navbarNavAltMarkup" aria-expanded="false" aria-label="Toggle navigation">
+        <span class="navbar-toggler-icon"></span>
+    </button>
+    <div class="collapse navbar-collapse" id="navbarNavAltMarkup">
+        <div class="navbar-nav ml-auto">
+            {% if session['email'] %}
+                
+                {% if session['user_type'] == "Teacher" %}
+                    <a class="nav-item nav-link active" href="{{ url_for('show_prompt') }}">Teacher</a>
+                {% endif %} <!-- Close the inner 'if' block -->
+
+                <!-- Dropdown begins -->
+                <a class="nav-link dropdown-toggle" href="#" id="navbarDropdown" role="button" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">
+                    <img src="{{ url_for('static', filename='images/avatar.png') }}" style="width: 25px; height: 25px; border-radius: 50%; margin-right: 10px;">
+                </a>
+                <div class="dropdown-menu dropdown-menu-right" aria-labelledby="navbarDropdown">
+                    <a class="dropdown-item" href="{{ url_for('view_profile') }}">View Profile</a>
+                    <a class="dropdown-item" href="{{ url_for('edit_profile') }}">Edit Profile</a>
+                    <a class="dropdown-item" href="{{ url_for('help') }}">Help</a>
+
+
+                    <div class="dropdown-item">
+                        <h6>Modes</h6>
+                        <div class="form-check">
+                            <input class="form-check-input" type="radio" name="interactionMode" id="showVoiceToggle" value="showVoice">
+                            <label class="form-check-label" for="showVoiceToggle">Text then Voice</label>
+                        </div>                           
+                        <div class="form-check">
+                            <input class="form-check-input" type="radio" name="interactionMode" id="voiceOnlyToggle" value="voiceOnly">
+                            <label class="form-check-label" for="voiceOnlyToggle">Voice Only</label>
+                        </div>
+                        <div class="form-check">
+                            <input class="form-check-input" type="radio" name="interactionMode" id="textOnlyToggle" value="textOnly">
+                            <label class="form-check-label" for="textOnlyToggle">Text Only</label>
+                        </div>
+                        <div class="form-check">
+                            <input class="form-check-input" type="radio" name="interactionMode" id="voiceThenTextToggle" value="voiceThenText" checked>
+                            <label class="form-check-label" for="voiceThenTextToggle">Voice then Text</label>
+                        </div>                 
+                    </div>
+                    <div class="dropdown-divider"></div>
+                    <a class="dropdown-item" href="{{ url_for('logout') }}" onclick="clearLocalStorageAndLogout()">Logout</a>
+
+                    <!-- Voice-only toggle -->
+
+                </div>
+
+            {% else %}
+                <a class="nav-item nav-link active" href="{{ url_for('signup') }}">Sign Up</a>
+                <a class="nav-item nav-link active" href="{{ url_for('login') }}">Login</a>
+            {% endif %} <!-- Close the outer 'if' block -->
+        </div>
+    </div>
+</nav>
+
+<script>
+    document.addEventListener('DOMContentLoaded', function() {
+        // Retrieve and apply the saved state from local storage
+
+        const defaultMode = 'textOnlyToggle';
+        const savedMode = localStorage.getItem('interactionMode');
+
+        if (savedMode) {
+            document.getElementById(savedMode).checked = true;
+        } else {
+            document.getElementById(defaultMode).checked = true;
+            localStorage.setItem('interactionMode', defaultMode);
+        }
+
+        const interactionModes = document.querySelectorAll('input[name="interactionMode"]');
+        interactionModes.forEach(function(mode) {
+            mode.addEventListener('change', function() {
+                if (this.checked) {
+                    localStorage.setItem('interactionMode', this.id);
+                    // Redirect based on the mode
+                    switch (this.id) {
+                        case 'voiceOnlyToggle':
+                        case 'showVoiceToggle':
+                        case 'voiceThenTextToggle':
+                            window.location.href = "{{ url_for('use_voicebot') }}";
+                            break;
+                        case 'textOnlyToggle':
+                            window.location.href = "{{ url_for('use_chatbot') }}";
+                            break;
+                        // Add cases for other modes if necessary
+                    }
+                }
+            });
+        });
+    });
+
+</script>
+
+<script>
+    function clearLocalStorageAndLogout() {
+        // Clear local storage
+        localStorage.clear();
+
+        // Redirect to logout
+        window.location.href = "{{ url_for('logout') }}";
+    }
+
+    // ... rest of your existing JavaScript ...
+</script>
+
