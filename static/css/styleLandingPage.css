@@ -20,6 +20,9 @@
     --box-shadow: 0 2rem 3rem var(--color-light)
 }
 
+.navbar.navbar-expand-lg .navbar-brand {
+    color: #ffffff; /* Sets the text color to white */
+}
 .dark-theme{
     --color-background: #181a1e;
     --color-white: #202528;

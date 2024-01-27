@@ -1,23 +1,23 @@
 document.addEventListener('DOMContentLoaded', function () {
-    const prompts = document.querySelectorAll('.prompt-item');
+    const topics = document.querySelectorAll('.topic-item');
 
-    prompts.forEach(prompt => {
-        prompt.addEventListener('click', function () {
-            // Remove 'selected' class from all prompts
-            prompts.forEach(p => p.classList.remove('selected'));
-            // Add 'selected' class to clicked prompt
+    console.log('topic before ',topics )
+    topics.forEach(topic => {
+       // console.log('topic ', topic)
+        topic.addEventListener('click', function () {
+            console.log('on click ')
+            topics.forEach(p => p.classList.remove('selected'));
             this.classList.add('selected');
-
-            // Send selected prompt to backend
-            const promptName = this.querySelector('.prompt-title').textContent;
-            const promptDescription = this.querySelector('.prompt-description').textContent;
-
-            fetch($SCRIPT_ROOT + '/update_prompt', {
+            const topicName = this.querySelector('.topic-title').textContent;
+            const topicDescription = this.querySelector('.topic-description').textContent;
+            console.log('topic Name ', topicName)
+            console.log('topic Description', topicDescription)
+            fetch($SCRIPT_ROOT + '/fetch_prompt', {
                 method: 'POST',
                 headers: {
                     'Content-Type': 'application/json',
                 },
-                body: JSON.stringify({ promptName, promptDescription }),
+                body: JSON.stringify({ topicName: topicName, topicDescription: topicDescription }),
             })
             .then(response => response.json())
             .then(data => {
@@ -31,24 +31,17 @@ document.addEventListener('DOMContentLoaded', function () {
         });
 
         // Add an event listener to the delete icon
-        const deleteIcon = prompt.querySelector('.fa-trash');
+        const deleteIcon = topic.querySelector('.fa-trash');
         if (deleteIcon) {
             deleteIcon.addEventListener('click', function(event) {
                 // Prevent the click from triggering the prompt selection
                 event.stopPropagation();
 
-                const promptName = this.getAttribute('data-prompt-name');
-                deletePrompt(promptName, prompt);
+                const topicName = this.getAttribute('data-topic-name');
+                deletePrompt(topicName, topic);
             });
         }
         // Add an event listener to the delete icon
-        const editIcon = prompt.querySelector('.edit_prompt_button');
-        if (editIcon) {
-            editIcon.addEventListener('click', function(event) {
-                // Prevent the click from triggering the prompt selection
-                event.stopPropagation();
-            });
-        }
     });
 });
 

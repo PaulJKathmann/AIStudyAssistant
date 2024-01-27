@@ -3,14 +3,22 @@
 #----------------------------------------------------------------------------#
 
 from asyncio import wait
-from flask import Flask, flash, redirect, render_template, request, url_for
+from flask import Flask, flash, redirect, render_template, request, url_for, session, jsonify
 # from flask.ext.sqlalchemy import SQLAlchemy
 import logging
 from logging import Formatter, FileHandler
 from forms import *
 import os
+from flask_session import Session
 from pymongo import MongoClient
 from werkzeug.security import generate_password_hash, check_password_hash
+from chatbot.conversation_manager import conversation_manager
+from chatbot.prompt_generator import prompt_generator
+from chatbot.chatbot import Chatbot
+from datetime import timedelta
+
+ # This loads the variables from .env
+import os
 
 #----------------------------------------------------------------------------#
 # App Config.
@@ -20,9 +28,15 @@ app = Flask(__name__)
 app.config.from_object('config')
 #db = SQLAlchemy(app)
 
+app.config['SESSION_PERMANENT'] = True
+app.config['SESSION_TYPE'] = 'filesystem'
+app.config['PERMANENT_SESSION_LIFETIME'] = timedelta(minutes=30)
+app.config.from_object(__name__)
+Session(app)
 
-client = MongoClient("mongodb+srv://mikth:KWJHqejostbRNm8Z@cluster0.xn2i2bv.mongodb.net/")
-db = client.get_database("AiAssistant").User_DB
+client = MongoClient("mongodb+srv://kathmann:PRYXSXABxqM0johQ@cluster0.yqfrbpf.mongodb.net/?tls=true&tlsVersion=TLS1.2")
+user_db = client.get_database("AiAssistant").User_Collection
+course_db = client.get_database("AiAssistant").Course_Collection
 
 # Automatically tear down SQLAlchemy.
 '''
@@ -50,13 +64,39 @@ def login_required(test):
 
 @app.route('/')
 def home():
-    return render_template('pages/placeholder.home.html')
+    return render_template('pages/coursesLandingPage.html')
 
 
 @app.route('/about')
 def about():
     return render_template('pages/placeholder.about.html')
 
+
+@app.route('/chatbot')
+def chatbot():
+    course_code = request.args.get('course_code')
+    course = course_db.find_one({'course_code':course_code})
+    #topics = course['topics']
+    if course:
+        topics = course.get('topics', [])
+        #return "Course not found", 404
+    else:
+        topics = ["File I/O in Java", "Java Collections", "Algorithm Analysis", "Stack and Queues in Java", "Binary Trees"]
+    return render_template('pages/base.html', topics=topics)
+
+@app.route('/predict', methods=['GET', 'POST'])
+def predict():
+    if 'chatbot' in session:
+        chatbot = session['chatbot']
+    else:
+        chatbot = Chatbot(name="paul")
+        session['chatbot'] = chatbot
+    text = request.get_json().get("message")
+    response, end = chatbot.get_response(text)
+
+    # response = "hello"
+    message = {"answer": response, "end": end}
+    return jsonify(message)
 
 @app.route('/login', methods=['GET', 'POST'])
 def login():
@@ -67,11 +107,13 @@ def login():
         password = form.password.data
 
         # Check if the user exists in the database
-        existing_user = db.find_one({'name': name})
+        existing_user = user_db.find_one({'name': name})
         if existing_user:
             # Check if the password matches
             if check_password_hash(existing_user['password'], password):
                 flash('Logged in successfully.')
+                chatbot = Chatbot(existing_user['name'])
+                session['chatbot'] = chatbot
                 return redirect(url_for('home'))
             else:
                 flash('Incorrect password.')
@@ -86,13 +128,13 @@ def register():
      # Check if the user already exists
     if request.method == 'POST' and form.validate():
         # Check if the user already exists
-        existing_user = db.find_one({'name': form.name.data})
-        if existing_user is None and request.method == 'POST' and form.validate():
+        existing_user = user_db.find_one({'name': form.name.data})
+        if existing_user is None and form.validate():
             # Hash the password for security
             hashpass = generate_password_hash(form.password.data, method='pbkdf2:sha512')
 
             # Insert the new user into the database
-            db.insert_one({'name': form.name.data, 'password': hashpass, 'email': form.email.data})
+            user_db.insert_one({'name': form.name.data, 'password': hashpass, 'email': form.email.data})
 
             flash('Registration successful!')
             return redirect(url_for('login'))
@@ -106,6 +148,35 @@ def register():
 def forgot():
     form = ForgotForm(request.form)
     return render_template('forms/forgot.html', form=form)
+
+@app.route('/logout')
+def logout():
+    return redirect(url_for('home'))
+
+@app.route('/fetch_prompt', methods=['POST'])
+def update_prompt():
+    chatbot = session['chatbot']
+    print('error in fetch_prompt')
+    data = request.json
+    topic_name = data['topicName']
+    file_id= None
+    # error handling in case the prompt name is invalid
+    if not topic_name:
+        return jsonify({'message': 'Invalid prompt name'}), 400
+
+    # Logic to find and set the corresponding system prompt and update the conversation manager
+    topic = course_db.find_one({"topic_name": topic_name})
+    if topic:
+        #full_prompt = prompt.get('full_prompt')
+        chatbot.prompt = prompt_generator(chatbot.user).generate_prompt()
+        # Empty messages and conversation_cache
+        chatbot.cm.clear_cm()
+        # reinstantiate the conversation manager with new prompt
+        chatbot.cm = conversation_manager(prompt=chatbot.prompt)
+        return jsonify({'message': 'Prompt updated successfully','file_id': file_id}), 200
+    else:
+        return jsonify({'message': 'Prompt not found'}), 404
+
 
 # Error handlers.
 
