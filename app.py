@@ -89,7 +89,7 @@ def predict():
     if 'chatbot' in session:
         chatbot = session['chatbot']
     else:
-        chatbot = Chatbot(name="paul")
+        chatbot = Chatbot(name="paul", topic="Java Collections")
         session['chatbot'] = chatbot
     text = request.get_json().get("message")
     response, end = chatbot.get_response(text)
@@ -155,25 +155,41 @@ def logout():
 
 @app.route('/fetch_prompt', methods=['POST'])
 def update_prompt():
-    chatbot = session['chatbot']
-    print('error in fetch_propmpt')
     data = request.json
     topic_name = data['topicName']
-    file_id= None
+
     # error handling in case the prompt name is invalid
     if not topic_name:
         return jsonify({'message': 'Invalid prompt name'}), 400
 
-    # Logic to find and set the corresponding system prompt and update the conversation manager
-    topic = course_db.find_one({"topic_name": topic_name})
+    # fetch topic from the database
+    course_code = request.args.get('course_code')
+    # Fetch the course from the database
+    course = course_db.find_one({'course_code': course_code})
+    if not course:
+        return jsonify({'message': 'Course not found'}), 404
+    
+    # get the course topic
+    for t in course['topics']:
+        if t['topic_name'] == topic_name:
+            topic = t
+            break
+        else:
+            None
+    if not topic:
+        return jsonify({'message': 'Topic not found'}), 404
+    
+    # setup a new chatbot instance since the prompt has changed
+    chatbot = Chatbot(name="paul", topic=topic)
+    session['chatbot'] = chatbot
     if topic:
         #full_prompt = prompt.get('full_prompt')
-        chatbot.prompt = prompt_generator(chatbot.user).generate_prompt()
+        chatbot.prompt = prompt_generator(chatbot.user).generate_prompt(topic)
         # Empty messages and conversation_cache
         chatbot.cm.clear_cm()
         # reinstantiate the conversation manager with new prompt
         chatbot.cm = conversation_manager(prompt=chatbot.prompt)
-        return jsonify({'message': 'Prompt updated successfully','file_id': file_id}), 200
+        return jsonify({'message': 'Prompt updated successfully'}), 200
     else:
         return jsonify({'message': 'Prompt not found'}), 404
 
