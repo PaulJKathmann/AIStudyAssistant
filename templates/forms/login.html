@@ -1,29 +1,31 @@
 {% extends 'layouts/form.html' %} {% block title %}Login{% endblock %} {% block
 content %}
 <form method="post" class="form">
-  <h3 class="form-heading">
+  <h3 class="form-heading text-center">
     Login
-    <a href="{{ url_for('home') }}" title="Back to homepage"
-      ><i class="fa fa-home pull-right"></i
-    ></a>
+    <a
+      href="{{ url_for('home') }}"
+      title="Back to homepage"
+      class="float-right"
+    >
+      <i class="fa fa-home"></i>
+    </a>
   </h3>
-  {{ form.name(class_ = 'form-control first-input', placeholder =
-  form.name.label.text, required = true, autofocus = true) }} {{
-  form.password(class_ = 'form-control last-input', placeholder =
-  form.password.label.text, required = true) }}
-  <p class="pull-left">
-    <a href="{{ url_for('forgot') }}">Forgot Password?</a>
-  </p>
-  <p class="pull-right"><a href="{{ url_for('register') }}">Register</a></p>
-  <input
-    type="submit"
-    value="Submit"
-    class="btn btn-primary btn-lg btn-block"
-  />
-  <p>
-    You must add database as well as Flask-Login to enable user management. See
-    the <a href="http://www.realpython.com">Real Python</a> course for more
-    info!
+  {{ form.name(class_='form-control mb-3', placeholder=form.name.label.text,
+  required=true, autofocus=true) }} {{ form.password(class_='form-control mb-3',
+  placeholder=form.password.label.text, required=true) }}
+
+  <div class="d-flex justify-content-between align-items-center">
+    <p><a href="{{ url_for('forgot') }}">Forgot Password?</a></p>
+    <p><a href="{{ url_for('register') }}">Register</a></p>
+  </div>
+
+  <button type="submit" class="btn btn-primary btn-lg btn-block mt-3">
+    Submit
+  </button>
+
+  <p class="mt-3">
+    Don't have an account? <a href="{{ url_for('register') }}">Register now</a>.
   </p>
 </form>
 {% endblock %}
