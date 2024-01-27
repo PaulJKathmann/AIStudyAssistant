@@ -64,7 +64,7 @@ def login_required(test):
 
 @app.route('/')
 def home():
-    return render_template('pages/placeholder.home.html')
+    return render_template('pages/coursesLandingPage.html')
 
 
 @app.route('/about')
@@ -156,7 +156,7 @@ def logout():
 @app.route('/fetch_prompt', methods=['POST'])
 def update_prompt():
     chatbot = session['chatbot']
-    print('error in fetch_propmpt')
+    print('error in fetch_prompt')
     data = request.json
     topic_name = data['topicName']
     file_id= None
