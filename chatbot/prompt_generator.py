@@ -14,54 +14,37 @@ class prompt_generator():
     def __init__(self, user: User) -> None:
         self.user = user
 
-    def read_prompt(self, prompt_name, prompt_type=None):
-        folder = "prompts/goals/" if prompt_type == "goal" else "prompts/"
-        filepath = os.path.join(BASE_DIR, folder, prompt_name + ".txt")
-        with open(filepath, "r") as filename:
-            prompt = filename.read()
-        return prompt
+    # def read_prompt(self, prompt_name, prompt_type=None):
+    #     folder = "prompts/goals/"
+    #     filepath = os.path.join(BASE_DIR, folder, prompt_name + ".txt")
+    #     with open(filepath, "r") as filename:
+    #         prompt = filename.read()
+    #     return prompt
 
-    def generate_prompt(self, monolingual=False, goal='have_fun', role='student', pdftext = None, vocabulary_size=500):
+    def generate_prompt(self):
         # generate prompt using the obtained details from the database:
-        intro_txt = self.read_prompt("intro")
+        intro_txt = "Help the student learn a particular topic. The student is a graduate student studying computer science"
         persona_txt = "You should be friendly and positive."
-        if monolingual == True:
-            language = "Speak in English"
-        else:
-            language = ""
+
+        language = "Speak in English"
+
 
         #background = "This is the first time that you are talking to them."
         background = ""
-        student_description = f"You are talking to a student named {self.user.name} who is {self.user.age} years old \
-        and studies in grade {self.user.grade}. They have studied English for {self.user.lang_proficiency} years."
+        student_description = f"You are talking to a student named {self.user.name}"
 
-        if role == 'student':
-            role_txt = "You are about the same age as the student and share similar interests."
-        if role == 'teacher':
-            role_txt = "You are a teacher and can answer questions in their native language."
+        role_txt = "Help the student study that topic by giving high level examples"
 
-        #vocab_txt = self.read_prompt("vocabulary")   # lists the full 500 words
-        vocab_txt = f"Try to restrict your answers to words the student has used, words related to any topic the student requests, and the {vocabulary_size} most common English words."
+
+        #expertise_level = "Student has x level of knowledge"  # lists the full 500 words
 
         
-        do_not = self.read_prompt("do_not")
 
-        if goal == 'learn_words':
-            session_goal = "The goal of this session is for the student to practice the following words: \
-                        cat, mouse, hat, coat, mittens. Start my telling the student that, listing the words. Then \
-                        please try to use these words in your conversation."
-        elif goal == 'discuss_text':
-            if pdftext is None:
-                print("Warning: null pdftext sent in")
-            session_goal = "Today you will talk to the student about the following text, which they have read:\n" + \
-               "-----------------\n " + pdftext + "-----------------\n" + \
-               " Start by telling the student that you will discuss their reading, then engage in a dialog, \
-               asking them questions about it."
-        else:
-            session_goal = self.read_prompt(goal, prompt_type="goal")
+
 
         prompt = intro_txt + " " + persona_txt + " " + \
-            language + " " + background + " " + student_description + " " + role_txt + \
-            " " + do_not + " " + vocab_txt +  " " +  session_goal
+            language + " " + background + " " + student_description + " " + role_txt
 
         return prompt
+
+

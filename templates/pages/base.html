@@ -1,0 +1,60 @@
+<!DOCTYPE html>
+<html lang="en">
+<link type="text/css" rel="stylesheet" href="/static/css/style.css" />
+<link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/bootstrap@4.0.0/dist/css/bootstrap.min.css" integrity="sha384-Gn5384xqQ1aoWXA+058RXPxPg6fy4IWvTNh0E263XmFcJlSAwiGgFAW/dAiS6JXm" crossorigin="anonymous">
+<script src="https://kit.fontawesome.com/ae755e3470.js" crossorigin="anonymous"></script>
+
+
+<head>
+    <meta charset="UTF-8">
+    <link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/4.0.0/css/bootstrap.min.css">
+    <script src="https://code.jquery.com/jquery-3.2.1.slim.min.js"></script>
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/popper.js/1.12.9/umd/popper.min.js"></script>
+    <script src="https://maxcdn.bootstrapcdn.com/bootstrap/4.0.0/js/bootstrap.min.js"></script>
+    <title>Study Assistant</title>
+</head>
+<body>
+    
+    {% include 'layouts/navbar.html' %}
+    <div class="chat-interface">
+        <div class="topic-selection">
+            <h4 class="topic-selection-header">Select Topic</h4>
+            <ul class="topic-list">
+                {% for topic in topics %}
+                <li class="topic-item">
+                    <h5 class="topic-title">{{ topic.topic_name }}</h5>
+                    <p class="topic-description">{{ topic.description }}</p>
+                    <i class="fa fa-trash" aria-hidden="true" data-topic-name="{{ topic.topic_name }}"></i>
+                </li>
+                
+                {% endfor %}
+                
+            </ul>
+        </div>        
+        <div class="container">
+            <div class="chatbox">
+                <div class="chatbox__support">
+                    <div class="chatbox__messages">
+                        <div></div>
+                    </div>
+                    <div class="chatbox__footer">
+                        <input type="text" placeholder="Write a message..." id = "input">
+                        <button class="chatbox__send--footer send__button">Send</button>
+                    </div>
+                </div>
+                <!-- <div class="chatbox__button">
+                    <button><img src="{{ url_for('static', filename='images/chatbox-icon.svg') }}" /></button>
+                </div> -->
+            </div>
+        </div>
+    </div>
+
+
+    <script>
+        $SCRIPT_ROOT = {{ request.script_root|tojson }};
+    </script>
+    <script type="text/javascript" src="{{ url_for('static', filename='js/app.js') }}"></script>
+    <script type="text/javascript" src="{{ url_for('static', filename='js/promptSelector.js') }}"></script>
+
+</body>
+</html>

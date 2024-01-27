@@ -1,0 +1,547 @@
+* {
+    box-sizing: border-box;
+    margin: 0;
+    padding: 0;
+}
+
+body {
+    font-family: 'Nunito', sans-serif;
+    font-weight: 400;
+    font-size: 100%;
+    background: #F1F1F1;
+}
+
+*, html {
+    --primaryGradient: linear-gradient(93.12deg, #581B98 0.52%, #9C1DE7 100%);
+    --secondaryGradient: linear-gradient(268.91deg, #581B98 -2.14%, #9C1DE7 99.69%);
+    --primaryBoxShadow: 0px 10px 15px rgba(0, 0, 0, 0.1);
+    --secondaryBoxShadow: 0px -10px 15px rgba(0, 0, 0, 0.1);
+    --primary: #581B98;
+}
+
+/* NEW CHAT INTERFACE
+=============== */
+.chat-interface {
+    display: flex;
+    height: calc(100vh - 56px); /* Full height of the viewport */
+}
+
+.container {
+    position: relative; /* Add this to ensure footer is positioned relative to this container */
+    flex-grow: 1; 
+    display: flex;
+    flex-direction: column; 
+    margin-left: 250px; /* Adjust this if sidebar width changes */
+    height: calc(100vh - 56px); /* Adjust this if the navbar height changes */
+    padding-bottom: 15px; /* Footer height to ensure content does not go behind the footer */
+}
+
+.chatbox {
+    flex-grow: 1; 
+    display: flex;
+    flex-direction: column;
+    overflow: hidden; /* Add this to prevent the chatbox from scrolling */
+    background: white;
+}
+
+.chatbox__support {
+    display: flex;
+    flex-direction: column;
+    justify-content: space-between; 
+    height: 100%; /* Full height */
+    overflow: auto; /* Scroll for overflow content */
+    background: white;
+}
+
+.chatbox__messages {
+    overflow-y: auto; /* Allows scrolling */
+    flex-grow: 1; /* Grow to use available space */
+    background: white;
+}
+
+.send__button:hover {
+    background: darken(var(--primary), 10%);
+}
+
+.message-bot, .message-user {
+    margin-bottom: 10px;
+    padding: 10px;
+    border-radius: 18px;
+}
+
+.message-bot {
+    background-color: #e0e0e0; /* Different background for bot messages */
+    text-align: left;
+}
+
+.message-user {
+    background-color: #4f93ce; /* Different background for user messages */
+    text-align: right;
+    color: white;
+}
+
+.send__button:hover {
+    background-color: #581b98 /* Darker shade for hover state */
+}
+
+/* Scrollbar styles for chat messages */
+.chatbox__messages::-webkit-scrollbar {
+    width: 8px;
+}
+
+.chatbox__messages::-webkit-scrollbar-thumb {
+    border-radius: 4px;
+}
+
+.chatbox__messages::-webkit-scrollbar-track {
+    background: #f7f7f7;
+}
+
+/* Responsive design for smaller screens */
+@media (max-width: 768px) {
+    .my-chat-container {
+        padding: 0 5px;
+    }
+}
+
+
+
+/* MESSAGES */
+.chatbox__messages {
+    margin-top: auto;
+    display: flex;
+    overflow-y: scroll;
+    flex-direction: column;
+    margin-bottom: 60px;
+}
+
+.messages__item {
+    background: lightgrey;
+    max-width: 60.6%;
+    width: fit-content;
+}
+
+.messages__item_chatbot_text {
+    border-top-left-radius: 20px;
+    border-top-right-radius: 20px;
+    border-bottom-right-radius: 20px;
+    background: lightgrey;
+    max-width: 60.6%;
+    width: fit-content;
+    margin-top: 10px;
+    padding: 8px 12px;
+    max-width: 70%;
+}
+
+.messages__item--operator {
+    margin-left: auto;
+}
+
+.messages__item--visitor {
+    margin-right: auto;
+    display: flex; /* Use flexbox to align items on the same line */
+    align-items: center; /* Center items vertically */
+    margin-bottom: 10px; /* Add space between messages */
+}
+
+/* Messages */
+.chatbox__messages {
+    padding: 0 20px;
+}
+
+.messages__item {
+    margin-top: 10px;
+    padding: 8px 12px;
+    max-width: 70%;
+}
+
+.messages__item--visitor,
+.messages__item--typing {
+    border-top-left-radius: 20px;
+    border-top-right-radius: 20px;
+    border-bottom-right-radius: 20px;
+}
+
+
+.messages__item--operator {
+    border-top-left-radius: 20px;
+    border-top-right-radius: 20px;
+    border-bottom-left-radius: 20px;
+    background: var(--primary);
+    color: white;
+}
+
+.chat-icon {
+    /* Adjust the size as needed */
+    width: 20px;
+    height: 20px;
+    /* Add some margin to separate the icon from the text */
+    margin-right: 12px;
+    /* Vertically align the icon with the text */
+    vertical-align: bottom;
+}
+
+/* If you're using a Font Awesome icon, you may want to adjust the font-size instead of width and height */
+.fa-robot {
+    font-size: 20px;
+    margin-right: 12px;
+}
+
+.chatbot_message_container {
+    display: flex; /* Use flexbox to align items on the same line */
+}
+
+
+/* Input/Footer */
+.chatbox__footer {
+    /*position: absolute; /* Position footer absolutely */
+    bottom: 0; /* Stick to the bottom */
+    left: 0; /* Align to the left */
+    width: 100%; /* Span the full width of the container */
+    display: flex;
+    /*height: 500px;*/
+    flex-direction: row;
+    align-items: center;
+    justify-content: space-between;
+    padding: 20px; /* Padding inside the footer */
+    z-index: 10; /* Ensure it's above other content */
+}
+
+.send__button {
+    padding: 10px 20px;
+    background-color: #581b98; /* Same as user message color */
+    color: white;
+    border: none;
+    border-radius: 4px;
+    cursor: pointer;
+}
+
+.chatbox__footer input {
+    width: calc(100% - 80px); /* Adjust the width based on the send button */
+    border-radius: 4px;
+    padding: 10px 20px;
+    border: lightgrey 1px solid; 
+    box-shadow: 10px 10px 15px rgba(0, 0, 0, 0.1);
+}
+
+.chatbox__send--footer {
+    color: white;
+    font-size: 15px;
+}
+
+
+.chatbox__input {
+    display: flex; /* Aligns the input and button side by side */
+}
+
+.input-field {
+    flex-grow: 1; /* Allows the input to grow and fill available space */
+    border: 1px solid #ddd;
+    padding: 10px;
+    border-radius: 18px 0 0 18px; /* Rounded corners on the left side */
+    margin-right: -1px; /* Negative margin to allow button to fit snugly */
+}
+
+.chatbox__button button,
+.chatbox__button button:focus,
+.chatbox__button button:visited {
+    padding: 10px;
+    background: white;
+    border: none;
+    outline: none;
+    border-top-left-radius: 50px;
+    border-top-right-radius: 50px;
+    border-bottom-left-radius: 50px;
+    box-shadow: 0px 10px 15px rgba(0, 0, 0, 0.1);
+    cursor: pointer;
+}
+
+.instructions-card {
+    position: fixed; /* Make it stick to the bottom */
+    bottom: 0;
+    width: 50%;
+    left: 50%;
+    transform: translateX(-50%);
+    background-color: lightgrey; /* Light grey background */
+    color: black;
+    padding: 10px;
+    font-size: 0.8rem; /* Smaller text */
+    box-shadow: 0 -2px 5px rgba(0,0,0,0.2); /* Slight shadow for better visibility */
+    padding: 32px;
+}
+.card {
+    background: #fbfbfb;
+    border-radius: 12px;
+    box-shadow: 1px 2px 8px rgba(0, 0, 0, 0.35);
+    height: auto;
+    margin: 6rem auto 8.1rem auto;
+    width: 500px;
+}
+
+.card-title {
+    font-family: "Raleway Thin", sans-serif;
+    letter-spacing: 4px;
+    padding-bottom: 23px;
+    padding-top: 13px;
+    text-align: center;
+  }
+
+.card-content {
+padding: 12px 44px;
+}
+
+.underline-title {
+    /*background: -webkit-linear-gradient(right, #a6f77b, #2ec06f);*/
+    background: #581b98;
+    height: 2px;
+    margin: -0.2rem auto 0 auto;
+    width: 50%;
+}
+
+a {
+    text-decoration: none;
+}
+label {
+font-family: "Raleway", sans-serif;
+font-size: 11pt;
+}
+.prompt-custom-radio-button {
+    color: #581B98;
+    background-color: #581B98;
+}
+#signup {
+color: #581b98;
+font-family: "Raleway", sans-serif;
+font-size: 10pt;
+margin-top: 16px;
+text-align: center;
+}
+.submit-btn, #signup {
+    display: block; /* This will allow margin to be applied properly */
+    margin: 20px auto; /* This centers the button and link */
+    text-align: center; /* This ensures the text inside the link is centered */
+}
+.submit-btn {
+/*background: -webkit-linear-gradient(right, #a6f77b, #2dbd6e);*/
+background: #581b98;
+border: none;
+border-radius: 21px;
+box-shadow: 0px 1px 8px #581b98;
+cursor: pointer;
+color: white;
+font-family: "Raleway SemiBold", sans-serif;
+height: 42.3px;
+margin: 0 auto;
+margin-top: 50px;
+margin-bottom: 32px;
+transition: 0.25s;
+width: 153px;
+}
+.submit-btn:hover {
+box-shadow: 0px 1px 18px #581b98;
+}
+.form {
+align-items: left;
+display: flex;
+flex-direction: column;
+}
+.form-border {
+background: #581b98;
+height: 1px;
+width: 100%;
+}
+.form-content {
+background: #fbfbfb;
+width: 100%;
+border: none;
+outline: none;
+padding: 0.5rem 0.7rem;
+}
+
+
+/*-- Recording button -- */
+.record-btn {
+    /* Style your button with microphone icon */
+    height: 60px;
+    width: 60px;
+    border-radius: 50%;
+}
+
+.record-btn.recording {
+    /* Style to indicate that recording is in progress */
+    background-color: #581b98; /* This is just an example */
+    color: #ddd;
+}
+
+.voice-recorder {
+    display: flex;
+    margin: auto;
+    align-items: center;
+    justify-content: center;
+    flex-direction: row; /* Align items in a row */
+    gap: 10px; /* Optional: adds space between elements */
+    text-align: center; /* Center the text in case it wraps */
+}
+
+.voice-recorder p {
+    margin: auto; /* Remove default margin */
+    display: inline-block; /* Inline block to fit content width */
+}
+
+.voice-divider {
+    /* horizontal divider */
+    border-top: 1px solid #581B98;
+    width: 80%;
+    margin: auto;
+    margin-bottom: 32px;
+}
+
+
+/* prompt selection sidebar */
+.topic-selection {
+    width: 250px; /* Adjust the width as necessary */
+    background-color: #333; /* Sidebar color */
+    padding: 20px;
+    overflow-y: auto; /* Allows scrolling if content is too long */
+}
+
+.topic-selection-header {
+    margin-bottom: 1rem; /* Add space below the header */
+    color: #ddd;
+}
+
+.topic-list {
+    list-style: none; /* Remove default list styling */
+    padding: 0; /* Remove default padding */
+}
+
+.topic-item {
+    border-radius: 8px; /* Rounded corners for each item */
+    padding: 1rem; /* Space inside each item */
+    margin-bottom: 1rem; /* Space between items */
+    border: #ddd 1px solid; /* Grey border */
+}
+
+.topic-item.selected {
+    border-color: #581b98;
+    border-width: 3px;
+}
+
+.topic-title {
+    font-size: 1.1rem; /* Slightly larger font size for title */
+    font-weight: bold; /* Make the title bold */
+    margin-bottom: 0.5rem; /* Space between title and description */
+    text-decoration: underline; /* Underline the title */
+    color: #ddd;
+}
+
+.topic-description {
+    font-size: 0.9rem; /* Smaller font size for description */
+    margin-bottom: 0; /* No additional margin needed here */
+    color: #ddd;
+    margin-bottom: 16px;
+}
+
+
+.topic-item {
+    position: relative;
+    /* Other styling for your prompt item */
+}
+
+.topic-item .fa-trash {
+    position: absolute;
+    bottom: 6px;
+    right: 6px;
+    color: #E43F6F;
+    cursor: pointer; /* Optional, changes cursor to pointer on hover */
+}
+
+.topic-item .edit_prompt_button {
+    margin-top: 16px;
+    position: absolute;
+    bottom: 6px;
+    color: #E43F6F;
+    cursor: pointer; /* Optional, changes cursor to pointer on hover */
+}
+
+.button-container {
+    display: flex;
+    justify-content: space-around; /* or 'space-between', 'flex-start', etc., based on your layout needs */
+    align-items: center;
+    padding: 10px;
+}
+
+.signup-btn {
+    background-color: white; /* Bootstrap primary color for example */
+    border-color: black;
+    color: #333;
+    padding: 10px 15px;
+    margin: 5px;
+    border-radius: 24px;
+    font-size: 16px;
+    cursor: pointer;
+    border-width: 0.5px;
+}
+
+.google-signin-btn {
+    background-color: white;
+    border-color: #333;
+    color: #333;
+    padding: 10px 15px;
+    border-radius: 24px;
+    font-size: 16px;
+    text-align: center;
+    display: inline-flex;
+    align-items: center;
+    justify-content: center;
+    cursor: pointer;
+    border-width: 0.5px;
+}
+
+.google-signin-btn img {
+    margin-right: 10px;
+}
+
+.gsi-material-button-icon {
+    height: 20px;
+    margin-right: 12px;
+    min-width: 20px;
+    width: 20px;
+  }
+
+.back-to-login-btn {
+    background-color: white; /* Bootstrap primary color for example */
+    border-color: black;
+    color: #333;
+    padding: 10px 15px;
+    border-radius: 24px;
+    font-size: 16px;
+    cursor: pointer;
+    border-width: 0.5px;
+    display: block; /* This will allow margin to be applied properly */
+    margin: 20px auto; /* This centers the button and link */
+    text-align: center;
+}
+
+.pdf-viewer {
+    position: relative; /* Makes sure the .pdf-viewer is positioned relative to its normal position */
+    height: calc(100vh - 150px); /* Full height of the viewport minus the height of header/navbar/footer etc. */
+    width: 100%; /* Full width */
+    margin-bottom: 20px; /* Space for full-screen button and additional padding */
+}
+
+iframe#pdfViewer {
+    height: 100%; /* Full height of its container */
+    width: 100%; /* Full width of its container */
+    border: none; /* Optional: Removes the border */
+}
+
+button#fullscreenButton {
+    position: absolute; /* Position the full-screen button over the iframe */
+    bottom: 10px; /* Distance from bottom */
+    left: 10px; /* Distance from left */
+    z-index: 10; /* Ensure the button is above the iframe */
+}
+
+
+
