@@ -26,7 +26,9 @@ class prompt_generator():
         intro_txt = "Help the student learn a particular topic. The student is a graduate student studying computer science"
         persona_txt = "You should be friendly and positive."
 
+
         language = "Speak in English"
+
 
 
         #background = "This is the first time that you are talking to them."
