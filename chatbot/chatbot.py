@@ -14,11 +14,8 @@ import numpy as np
 
 
 openai.api_key = ''
-os.environ['OPENAI_API_KEY'] = openai.api_key
-
-client = MongoClient(
-    "mongodb+srv://mikth:KWJHqejostbRNm8Z@cluster0.xn2i2bv.mongodb.net/")
-
+OPENAI_API_KEY = os.getenv("OPENAI_API_KEY")
+client = MongoClient("mongodb+srv://kathmann:PRYXSXABxqM0johQ@cluster0.yqfrbpf.mongodb.net/?tls=true&tlsVersion=TLS1.2")
 
 
 class Chatbot():

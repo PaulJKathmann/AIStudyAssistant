@@ -48,31 +48,16 @@ class Chatbox{
         })
         .then(r => r.json())
         .then(r => {
-            let msg2 = {name: "Chatbot", message: r.answer, voice_speed: r.voice_speed};
-            
-            // Check the state of the toggle
-            const isVoiceThenText = document.getElementById('voiceThenTextToggle').checked;
-          //  console.log("isvoi "+isVoiceThenText);
-            if(isVoiceThenText){
-                // If the toggle is checked, voice first then text
-                convertTextToSpeech(r.answer, r.voice_speed, () => {
-                    this.messages.push(msg2);
-                    this.updateChatText(chatbox);
-                });
-            } else {
-                // If the toggle is not checked, text first then voice
-                this.messages.push(msg2);
-                console.log('Messages ',this.messages);
-                this.updateChatText(chatbox);
-                convertTextToSpeech(r.answer, r.voice_speed);
-            }
+            let msg2 = {name: "Chatbot", message: r.answer};
+            this.messages.push(msg2);
+            console.log('Messages ',this.messages);
+            this.updateChatText(chatbox);
     
             if(r.end === 1){
                 this.messages = []
                 this.updateChatText(chatbox)
                 setTimeout(2000)
             }
-    
             console.log(msg2);
             return(msg2);
             
@@ -100,26 +85,22 @@ class Chatbox{
         this.get_response(text1, chatbox)
     }
 
-    updateChatText(chatbox){
-        const voiceOnly = document.getElementById('voiceOnlyToggle').checked;
-    
-        if (!voiceOnly) { // Check if voice-only mode is off
-            var html = '';
-            const newMessage = this.messages[this.messages.length - 1]
-    
-            if (newMessage.name === "Chatbot") {
-                console.log('First if');
-                html += '<div class="messages__item--visitor"><i class="fa fa-robot chat-icon"></i><div class="messages__item_chatbot_text">' + newMessage.message + '</div></div>'
-            } else {
-                console.log('else');               
-                html += '<div class="messages__item messages__item--operator">' + newMessage.message + '</div>'
-            }
-    
-            const chatmessages = chatbox.querySelector('.chatbox__messages');
-          //  console.log(chatmessages.innerHTML);
-            chatmessages.innerHTML += html;
-            chatmessages.scrollTop = chatmessages.scrollHeight;
+    updateChatText(chatbox){    
+        var html = '';
+        const newMessage = this.messages[this.messages.length - 1]
+
+        if (newMessage.name === "Chatbot") {
+            console.log('First if');
+            html += '<div class="messages__item--visitor"><i class="fa fa-robot chat-icon"></i><div class="messages__item_chatbot_text">' + newMessage.message + '</div></div>'
+        } else {
+            console.log('else');               
+            html += '<div class="messages__item messages__item--operator">' + newMessage.message + '</div>'
         }
+
+        const chatmessages = chatbox.querySelector('.chatbox__messages');
+        //  console.log(chatmessages.innerHTML);
+        chatmessages.innerHTML += html;
+        chatmessages.scrollTop = chatmessages.scrollHeight;
     }
 
 }

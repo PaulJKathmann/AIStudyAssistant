@@ -34,7 +34,7 @@ app.config['PERMANENT_SESSION_LIFETIME'] = timedelta(minutes=30)
 app.config.from_object(__name__)
 Session(app)
 
-client = MongoClient("mongodb+srv://mikth:wum3qo6zrZ2is8Bv@cluster0.yeoxca6.mongodb.net/")
+client = MongoClient("mongodb+srv://kathmann:PRYXSXABxqM0johQ@cluster0.yqfrbpf.mongodb.net/?tls=true&tlsVersion=TLS1.2")
 user_db = client.get_database("AiAssistant").User_Collection
 course_db = client.get_database("AiAssistant").Course_Collection
 
@@ -77,11 +77,26 @@ def chatbot():
     course_code = request.args.get('course_code')
     course = course_db.find_one({'course_code':course_code})
     #topics = course['topics']
-    if not course:
-        return "Course not found", 404
-    
-    topics = course.get('topics', [])
+    if course:
+        topics = course.get('topics', [])
+        #return "Course not found", 404
+    else:
+        topics = ["File I/O in Java", "Java Collections", "Algorithm Analysis", "Stack and Queues in Java", "Binary Trees"]
     return render_template('pages/base.html', topics=topics)
+
+@app.route('/predict', methods=['GET', 'POST'])
+def predict():
+    if 'chatbot' in session:
+        chatbot = session['chatbot']
+    else:
+        chatbot = Chatbot(name="paul")
+        session['chatbot'] = chatbot
+    text = request.get_json().get("message")
+    response, end = chatbot.get_response(text)
+
+    # response = "hello"
+    message = {"answer": response, "end": end}
+    return jsonify(message)
 
 @app.route('/login', methods=['GET', 'POST'])
 def login():
@@ -114,7 +129,7 @@ def register():
     if request.method == 'POST' and form.validate():
         # Check if the user already exists
         existing_user = user_db.find_one({'name': form.name.data})
-        if existing_user is None and request.method == 'POST' and form.validate():
+        if existing_user is None and form.validate():
             # Hash the password for security
             hashpass = generate_password_hash(form.password.data, method='pbkdf2:sha512')
 

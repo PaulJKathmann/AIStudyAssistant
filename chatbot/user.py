@@ -13,8 +13,11 @@ class User():
         user_db = client.get_database(
             'AiAssistant').User_Collection
         user = user_db.find_one({'name': name})
-        self.name = user["name"]
-        # self.name = user["name"]
+        if user:
+            self.name = user["name"]
+        else:
+            print("User not found. Proceeding with inexistent user")
+            self.name = name
 
     
 
