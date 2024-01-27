@@ -21,14 +21,10 @@ class prompt_generator():
             prompt = filename.read()
         return prompt
 
-    def generate_prompt(self, monolingual=False, goal='have_fun', role='student', pdftext = None, vocabulary_size=500):
+    def generate_prompt(self, goal='have_fun', role='student', pdftext = None, vocabulary_size=500):
         # generate prompt using the obtained details from the database:
         intro_txt = self.read_prompt("intro")
         persona_txt = "You should be friendly and positive."
-        if monolingual == True:
-            language = "Speak in English"
-        else:
-            language = ""
 
         #background = "This is the first time that you are talking to them."
         background = ""
