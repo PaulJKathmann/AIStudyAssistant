@@ -53,13 +53,13 @@ class conversation_manager():
                 response = openai.chat.completions.create(
                     model="gpt-3.5-turbo-1106", temperature=0.8, max_tokens=500, messages=self.messages)                
                 # the response from the assistant is saved into the chat history(messages)
-                self.messages.append(dict(response["choices"][0]["message"]))
+                self.messages.append(dict(response.choices[0].message))
                 print(
-                    f"Response from chatgpt: {response['choices'][0]['message']}")
+                    f"Response from chatgpt: {response.choices[0].message}")
                 # Adding to the response to the cache
                 self.conversation_cache.append(
-                    response["choices"][0]["message"])
-                return response["choices"][0]["message"]["content"]
+                    response.choices[0].message)
+                return response.choices[0].message.content
 
             except openai.error.APIConnectionError as e:
                 wait_time = base_wait_time * \
