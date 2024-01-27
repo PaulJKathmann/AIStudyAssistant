@@ -8,6 +8,8 @@ import logging
 from logging import Formatter, FileHandler
 from forms import *
 import os
+import pymongo
+from pymongo import MongoClient
 
 #----------------------------------------------------------------------------#
 # App Config.
@@ -16,7 +18,10 @@ import os
 app = Flask(__name__)
 app.config.from_object('config')
 #db = SQLAlchemy(app)
-
+client = MongoClient("mongodb+srv://mikth:KWJHqejostbRNm8Z@cluster0.xn2i2bv.mongodb.net/")
+db = client.get_database("AiAssistant").User_DB
+# seed one user as a test:
+db.insert_one({"name": "paul", "password": "1234", "email": "paul.kathmann.98@gmail.com"})
 # Automatically tear down SQLAlchemy.
 '''
 @app.teardown_request
