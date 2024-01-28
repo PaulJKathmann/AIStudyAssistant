@@ -1,22 +1,10 @@
-[![License](https://img.shields.io/badge/License-Apache%202.0-blue.svg)](https://opensource.org/licenses/Apache-2.0)
+## Welcome to the MCIT AI Study Assistant
 
-## Welcome
-
-Hello. Want to get started with Flask quickly? Good. You came to the right place. This Flask application framework is pre-configured with **Flask-SQLAlchemy**, **Flask-WTF**, **Fabric**, **Coverage**, and the **Bootstrap** frontend (among others). This will get your Flask app up and running on Heroku or PythonAnywhere quickly. Use this starter, boilerplate for all you new Flask projects. Cheers!
+The goal of this web app is to help students get a study assistant that is always available, motivates students through gamification and can adapt to speed and needs of the student (personalization). In the future we also want to make it more collaborative by allowing students to chat with the AI tutor in a single chat group.
 
 <hr>
 
-![real-python-logo](https://raw.githubusercontent.com/realpython/about/master/rp_small.png)
-
-**Designed for the [Real Python](http://www.realpython.com) course.**
-
-<hr>
-
-Preview the skeleton app here - [http://www.flaskboilerplate.com/](http://www.flaskboilerplate.com/)
-
-**EXAMPLE APP: [http://flasktaskr.herokuapp.com/](http://flasktaskr.herokuapp.com/)**
-
-**What is Flask?** Flask is a microframework for Python based on Werkzeug and Jinja2.
+**Tech Stack:** Flask is a microframework for Python based on Werkzeug and Jinja2.
 
 Project Structure
 --------
