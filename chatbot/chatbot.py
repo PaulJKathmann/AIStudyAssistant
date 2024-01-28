@@ -20,8 +20,10 @@ client = MongoClient("mongodb+srv://kathmann:PRYXSXABxqM0johQ@cluster0.yqfrbpf.m
 
 class Chatbot():
 
-    def __init__(self, name: str, topic: str) -> None:
+    def __init__(self, name: str, course_code: str, topic: str) -> None:
         self.user = User(client=client, name=name)
+        self.course_code = course_code
+        self.topic = topic
         self.prompt = prompt_generator(user=self.user).generate_prompt(topic=topic)
         self.cm = conversation_manager(prompt=self.prompt)
         print("Initialize the chatbot..")
@@ -35,11 +37,3 @@ class Chatbot():
             res = self.cm.get_gpt_response(input_text=text)
 
         return res, end
-
-
-# import pickle
-# client = MongoClient("mongodb+srv://kapadiaaryan09:FuYneFdGHF1A989e@cluster0.rxbbi1v.mongodb.net/?retryWrites=true&w=majority")
-# test = Chatbot(client = client, userId="aryan01")
-# serialized_chatbot = pickle.dumps(test)
-# # response = test.get_response(text = "Hello, how are you?")
-# # print(response)
