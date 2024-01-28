@@ -76,6 +76,9 @@ h4 {
 h5 {
   font-size: 0.77rem;
 }
+h6 {
+  font-size: 0.60rem;
+}
 small {
   font-size: 0.75rem;
 }
@@ -274,8 +277,9 @@ main .subjects .progress {
   position: relative;
   width: 150px;
   height: 89px;
-  border-radius: 50%;
-  margin: auto;
+  /* border-radius: 50%;
+  margin: auto; */
+  background-color: white;
 }
 main .subjects svg circle {
   fill: none;
@@ -304,7 +308,7 @@ main .subjects .progress .number {
   top: 0;
   left: 0;
   height: 100%;
-  width: 100%;
+  width: 60%;
   display: flex;
   justify-content: center;
   align-items: center;
