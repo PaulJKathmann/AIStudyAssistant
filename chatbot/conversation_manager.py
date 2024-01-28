@@ -1,10 +1,12 @@
-import openai
+from openai import OpenAI
 from chatbot.utils import num_tokens_from_messages
 import time
 import textstat
+from dotenv import load_dotenv
 
-# Default language for textstat is en_US
-
+# Load environment variables from .env file
+load_dotenv()
+openai = OpenAI()
 
 class conversation_manager():
 
@@ -48,23 +50,25 @@ class conversation_manager():
         for retry in range(max_retries):
             try:
                 print(f"sending to chatgpt: {self.messages}")
-                response = openai.ChatCompletion.create(
-                    model="gpt-4-1106-preview", temperature=0.8, max_tokens=500, messages=self.messages)                
+                response = openai.chat.completions.create(
+                    model="gpt-3.5-turbo-1106", temperature=0.8, max_tokens=500, messages=self.messages)                
                 # the response from the assistant is saved into the chat history(messages)
-                self.messages.append(dict(response["choices"][0]["message"]))
+                response_json = { "role": "assistant", "content": response.choices[0].message.content }
+                self.messages.append(response_json)
                 print(
-                    f"Response from chatgpt: {response['choices'][0]['message']}")
+                    f"Response from chatgpt: {response_json}")
                 # Adding to the response to the cache
                 self.conversation_cache.append(
-                    response["choices"][0]["message"])
-                return response["choices"][0]["message"]["content"]
+                    response.choices[0].message)
+                return response.choices[0].message.content
 
-            except openai.error.APIConnectionError as e:
+            except Exception as e:
+                print(f"Error: {e}")
                 wait_time = base_wait_time * \
                     (2 ** retry)  # Exponential backoff
                 time.sleep(wait_time)
                 continue
-        raise Exception("Max retries reached.")
+        raise Exception(f"Max retries reached. ")
 
     def print_conversation(self):
         for i in self.conversation_cache:
@@ -76,40 +80,10 @@ class conversation_manager():
 
     def clear_cm(self):
         # Resetting messages and conversation cache
-        self.messages.clear()
-        self.conversation_cache.clear()
+        if self.messages:
+            self.messages.clear()
+        if self.conversation_cache:
+            self.conversation_cache.clear()
         self.messages.append({"role": "system", "content": self.prompt})
         self.conversation_cache.append(
             {"role": "system", "content": self.prompt})
-        
-        
-    def get_current_reading_scores(self):
-        text_bot = ""
-        text_user = ""
-        for i in self.conversation_cache:
-            if i['role'] == "assistant":
-                text_bot = text_bot + i['content'] + "\n" 
-            elif i['role'] == "user":
-                text_user = text_user + i['content']+ "\n"
-        
-        bot_grade = textstat.text_standard(text_bot, float_output=False)
-        user_grade = textstat.text_standard(text_user, float_output=False)
-        
-        bot_mcalpine = textstat.mcalpine_eflaw(text_bot)
-        user_mcalpine = textstat.mcalpine_eflaw(text_user)
-        
-        return {"bot_grade": bot_grade, "user_grade": user_grade, "bot_mcalpine": bot_mcalpine, "user_mcalpine": user_mcalpine}
-    
-        
-        
-        
-        
-        
-
-        
-                
-        
-                
-        print("Bot: \n" + text_bot)
-        print("User: \n" + text_user)
-        

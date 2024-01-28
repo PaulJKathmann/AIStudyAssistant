@@ -1,0 +1,51 @@
+{% extends 'layouts/main.html' %}
+{% block title %}Study Assistant{% endblock %}
+{% block content %}
+
+<div class="page-header">
+  <h1>Study Assistant</h1>
+</div>
+<body>
+  <div class="chat-interface">
+      <div class="topic-selection">
+          <h4 class="topic-selection-header">Select Topic</h4>
+          <ul class="topic-list">
+              {% for topic in topics %}
+              <li class="topic-item">
+                  <h5 class="topic-title">{{ topic.topic_name }}</h5>
+                  <p class="topic-description">{{ topic.description }}</p>
+                  <i class="fa fa-trash" aria-hidden="true" data-topic-name="{{ topic.topic_name }}"></i>
+              </li>
+              
+              {% endfor %}
+              
+          </ul>
+      </div>        
+      <div class="container">
+          <div class="chatbox">
+              <div class="chatbox__support">
+                  <div class="chatbox__messages">
+                      <div></div>
+                  </div>
+                  <div class="chatbox__footer">
+                      <input type="text" placeholder="Write a message..." id = "input">
+                      <button class="chatbox__send--footer send__button">Send</button>
+                  </div>
+              </div>
+              <!-- <div class="chatbox__button">
+                  <button><img src="{{ url_for('static', filename='images/chatbox-icon.svg') }}" /></button>
+              </div> -->
+          </div>
+      </div>
+  </div>
+
+
+  <script>
+      $SCRIPT_ROOT = {{ request.script_root|tojson }};
+  </script>
+  <script type="text/javascript" src="{{ url_for('static', filename='js/app.js') }}"></script>
+  <script type="text/javascript" src="{{ url_for('static', filename='js/promptSelector.js') }}"></script>
+
+</body>
+
+{% endblock %}
