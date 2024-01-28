@@ -11,6 +11,9 @@ body {
     background: #F1F1F1;
 }
 
+.navbar.navbar-expand-lg .navbar-brand {
+    color: #ffffff; /* Sets the text color to white */
+}
 *, html {
     --primaryGradient: linear-gradient(93.12deg, #581B98 0.52%, #9C1DE7 100%);
     --secondaryGradient: linear-gradient(268.91deg, #581B98 -2.14%, #9C1DE7 99.69%);
@@ -542,6 +545,3 @@ button#fullscreenButton {
     left: 10px; /* Distance from left */
     z-index: 10; /* Ensure the button is above the iframe */
 }
-
-
-

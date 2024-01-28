@@ -1,0 +1,153 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Student Dashboard</title>
+    <link rel="shortcut icon" href="./images/logo.png">
+    <link href="https://fonts.googleapis.com/icon?family=Material+Icons+Sharp" rel="stylesheet">
+    <link rel="stylesheet" href="/static/css/styleLandingPage.css">
+    <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/bootstrap@4.0.0/dist/css/bootstrap.min.css" integrity="sha384-Gn5384xqQ1aoWXA+058RXPxPg6fy4IWvTNh0E263XmFcJlSAwiGgFAW/dAiS6JXm" crossorigin="anonymous">
+
+    
+</head>
+<body>
+
+
+        {% include 'layouts/navbar.html' %}
+    <div class="container">
+        <aside>
+            <div class="profile">
+                <div class="top">
+                    <div class="profile-photo">
+			<img src="/Users/nimishamalik/Desktop/student user.png" alt="">
+                    </div>
+                    <div class="info">
+                        <p>Hey, <b>Nimisha</b> </p>
+                        <small class="text-muted">12102030</small>
+                    </div>
+                </div>
+                <div class="about">
+                    <h5>Course</h5>
+                    <p>Masters in Computer and Information Technology</p>
+                    <h5>School</h5>
+                    <p>SEAS</p>
+                    <h5>Points</h5>
+                    <p>100</p>
+                    <h5>Email</h5>
+                    <p>unknown@gmail.com</p>
+                    <h5>Address</h5>
+                    <p>-</p>
+                </div>
+            </div>
+        </aside>
+
+        <main>
+            <h1>Welcome back! What do you want to learn today?</h1>
+            <div class="subjects">
+                <div class="eg">
+                    <span class="material-icons-sharp">architecture</span>
+                    <h3>CIT 594</h3>
+                    <h2>12/14</h2>
+                    <div class="progress">
+                        <svg><circle cx="38" cy="38" r="36"></circle></svg>
+                        <div class="number"><p>86%</p></div>
+                    </div>
+                    <small class="text-muted">Last 24 Hours</small>
+                </div>
+                <div class="mth">
+                    <span class="material-icons-sharp">functions</span>
+                    <h3>CIT 595</h3>
+                    <h2>27/29</h2>
+                    <div class="progress">
+                        <svg><circle cx="38" cy="38" r="36"></circle></svg>
+                        <div class="number"><p>93%</p></div>
+                    </div>
+                    <small class="text-muted">Last 24 Hours</small>
+                </div>
+                <div class="cs">
+                    <span class="material-icons-sharp">computer</span>
+                    <h3>CIT 596</h3>
+                    <h2>27/30</h2>
+                    <div class="progress">
+                        <svg><circle cx="38" cy="38" r="36"></circle></svg>
+                        <div class="number"><p>81%</p></div>
+                    </div>
+                    <small class="text-muted">Last 24 Hours</small>
+                </div>
+
+            </div>
+
+            <div class="timetable" id="timetable">
+                <div>
+                    <span id="prevDay">&lt;</span>
+                    <h2>Extra</h2>
+                    <span id="nextDay">&gt;</span>
+                </div>
+                <span class="closeBtn" onclick="timeTableAll()">X</span>
+                <table>
+                    <thead>
+                        <tr>
+                            <th>-</th>
+                            <th>-</th>
+                            <th>-</th>
+                            <th></th>
+                        </tr>
+                    </thead>
+                    <tbody></tbody>
+                </table>
+            </div>
+        </main>
+
+       <div class="right">
+            <div class="announcements">
+                <h2>Content</h2>
+                <div class="updates">
+                    <div class="message">
+                        <p> <b>Academic</b> Content</p>
+                        <small class="text-muted">-</small>
+                    </div>
+                    <div class="message">
+                        <p> <b>Co-curricular</b> Content</p>
+                        <small class="text-muted">-</small>
+                    </div>
+                    <div class="message">
+                        <p> <b>Examination</b> Content</p>
+                        <small class="text-muted">-</small>
+                    </div>
+                </div>
+            </div>
+
+            <div class="leaves">
+                <h2>Course Instructors</h2>
+                <div class="teacher">
+                    <div class="profile-photo"><img src="/Users/nimishamalik/Desktop/instructor.jpg" alt=""></div>
+                    <div class="info">
+                        <h3>Harry Smith and Eric Fouh</h3>
+                        <small class="text-muted">CIT 594</small>
+                    </div>
+                </div>
+                <div class="teacher">
+                    <div class="profile-photo"><img src="/Users/nimishamalik/Desktop/instructor.jpg" alt=""></div>
+                    <div class="info">
+                        <h3>Travis McGaha</h3>
+                        <small class="text-muted">CIT 595</small>
+                    </div>
+                </div>
+                <div class="teacher">
+                    <div class="profile-photo"><img src="/Users/nimishamalik/Desktop/instructor.jpg" alt=""></div>
+                    <div class="info">
+                        <h3>Arvind Bhusrumath</h3>
+                        <small class="text-muted">CIT 596</small>
+                    </div>
+                </div>
+            </div>
+
+        </div>
+    </div>
+
+    <script src="timeTable.js"></script>
+    <script src="app.js"></script>
+</body>
+</html>

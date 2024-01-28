@@ -25,7 +25,6 @@ class prompt_generator():
         # generate prompt using the obtained details from the database:
         intro_txt = f"Help the student learn a particular about {topic}. The student is a graduate student studying computer science"
         persona_txt = "You should be friendly and positive as you are a teaching assistant and you want to help the student learn."
-
         student_description = f"You are talking to a student named {self.user.name}."
 
         role_txt = f"Help the student study {topic} by explaining the concepts at a high level first and then give them simple examples."
