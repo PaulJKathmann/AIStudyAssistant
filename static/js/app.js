@@ -88,13 +88,16 @@ class Chatbox{
     updateChatText(chatbox){    
         var html = '';
         const newMessage = this.messages[this.messages.length - 1]
+        // Parse Markdown to HTML
+        const messageHtml = marked.parse(newMessage.message);
+
 
         if (newMessage.name === "Chatbot") {
             console.log('First if');
-            html += '<div class="messages__item--visitor"><i class="fa-solid fa-brain"></i><div class="messages__item_chatbot_text">' + newMessage.message + '</div></div>'
+            html += '<div class="messages__item--visitor"><i class="fa-solid fa-brain"></i><div class="messages__item_chatbot_text">' + messageHtml + '</div></div>'
         } else {
             console.log('else');               
-            html += '<div class="messages__item messages__item--operator">' + newMessage.message + '</div>'
+            html += '<div class="messages__item messages__item--operator">' + messageHtml + '</div>'
         }
 
         const chatmessages = chatbox.querySelector('.chatbox__messages');
