@@ -87,7 +87,3 @@ class conversation_manager():
         self.messages.append({"role": "system", "content": self.prompt})
         self.conversation_cache.append(
             {"role": "system", "content": self.prompt})
-                
-        print("Bot: \n" + text_bot)
-        print("User: \n" + text_user)
-        
