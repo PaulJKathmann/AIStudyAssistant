@@ -89,14 +89,32 @@ def predict():
     if 'chatbot' in session:
         chatbot = session['chatbot']
     else:
-        chatbot = Chatbot(name="paul", topic="Java Collections")
+        chatbot = Chatbot(name="paul", course_code="CIT594", topic="Iterators in Java")
         session['chatbot'] = chatbot
     text = request.get_json().get("message")
     response, end = chatbot.get_response(text)
 
     # response = "hello"
     message = {"answer": response, "end": end}
+    if message and response:
+        update_points(chatbot)
     return jsonify(message)
+
+def update_points(chatbot):
+    # fetch the right course and topic
+    course_code = chatbot.course_code
+
+    # then increment the value of the xp for the topic by +1
+    # Find the document and increment the points by 1
+    updated_document = course_db.find_one_and_update(
+        { 'course_code': course_code },
+        { '$inc': {'points': 1} },
+        return_document=True
+    )
+
+    if updated_document:
+        print(f"added +1 point for course: {updated_document}")
+        return jsonify(f"added +1 point for course: {updated_document}")
 
 @app.route('/login', methods=['GET', 'POST'])
 def login():
@@ -112,7 +130,7 @@ def login():
             # Check if the password matches
             if check_password_hash(existing_user['password'], password):
                 flash('Logged in successfully.')
-                chatbot = Chatbot(existing_user['name'])
+                chatbot = Chatbot(existing_user['name'], course_code="CIT594", topic="Iterators in Java")
                 session['chatbot'] = chatbot
                 return redirect(url_for('home'))
             else:
@@ -182,11 +200,9 @@ def update_prompt():
     if not topic:
         print(f"Topic not found: {topic_name}")
         return jsonify({'message': 'Topic not found'}), 404
-    
-    print(f"Topic found: {topic}")
-    print("Updating prompt...\n\n")
+
     # setup a new chatbot instance since the prompt has changed
-    chatbot = Chatbot(name="paul", topic=topic)
+    chatbot = Chatbot(name="paul", topic=topic, course_code=course_code)
     session['chatbot'] = chatbot
     if chatbot and session['chatbot']:
         print(f"Chatbot prompt updated successfully: chatbot {chatbot}; session {session['chatbot']}")
