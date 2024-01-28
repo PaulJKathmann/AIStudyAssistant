@@ -1,6 +1,17 @@
 document.addEventListener('DOMContentLoaded', function () {
     const topics = document.querySelectorAll('.topic-item');
 
+    // Insert the course_code into the .topic-selection-header element
+    const courseCodeElement = document.querySelector('.topic-selection-header');
+    if (courseCodeElement) {
+        // Get course_code from URL parameters
+        const urlParams = new URLSearchParams(window.location.search);
+        const course_code = urlParams.get('course_code');
+
+        // Set the text content of the element
+        courseCodeElement.textContent = "Study " + course_code;
+    }
+
     console.log('topic before ',topics )
     topics.forEach(topic => {
        // console.log('topic ', topic)
@@ -33,20 +44,7 @@ document.addEventListener('DOMContentLoaded', function () {
                 startConversation();
             })
             .catch(error => console.error('Error:', error));
-        });
-
-        // Add an event listener to the delete icon
-        const deleteIcon = topic.querySelector('.fa-trash');
-        if (deleteIcon) {
-            deleteIcon.addEventListener('click', function(event) {
-                // Prevent the click from triggering the prompt selection
-                event.stopPropagation();
-
-                const topicName = this.getAttribute('data-topic-name');
-                deletePrompt(topicName, topic);
-            });
-        }
-        // Add an event listener to the delete icon
+        });     
     });
 });
 
@@ -69,20 +67,4 @@ function startConversation() {
     // prompt gpt to start conversation
     const prompt = "Let's start: Act as an teaching assistant for a computer science student to achieve the goal in the system prompt.";
     chatbox.get_response(prompt, chatbox.args.chatBox);
-}
-
-function deletePrompt(promptName, promptElement) {
-    // Call the Flask endpoint to delete the prompt
-    fetch($SCRIPT_ROOT + '/delete_prompt_template/' + encodeURIComponent(promptName), {
-        method: 'DELETE'
-    })
-    .then(response => {
-        if (response.ok) {
-            // Remove the prompt element from the DOM
-            promptElement.remove();
-        } else {
-            console.error('Failed to delete prompt');
-        }
-    })
-    .catch(error => console.error('Error:', error));
 }
