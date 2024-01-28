@@ -40,26 +40,9 @@
   box-sizing: border-box;
 }
 
-html{
-    font-size: 14px;
-    scroll-behavior: smooth;
-}
-body{
-    font-family: 'Poppins', sans-serif;
-    font-size: .88rem;
-    background: var(--color-background);
-    user-select: none;
-    overflow-x: hidden;
-    color: var(--color-dark);
-}
-*{
-    color: var(--color-dark);
-}
-img {
-    width: 100px; /* Set the width to a smaller size */
-    height: auto; /* This will maintain the aspect ratio of the image */
-=======
-
+html {
+  font-size: 14px;
+  scroll-behavior: smooth;
 }
 body {
   font-family: "Poppins", sans-serif;
@@ -69,31 +52,9 @@ body {
   overflow-x: hidden;
   color: var(--color-dark);
 }
-
-h2{font-size: 1.4rem;}
-h3{font-size: .87rem;}
-h4{font-size: .8rem;}
-h5{font-size: .77rem;}
-small{font-size: .75rem;}
-
-.text-muted{color: var(--color-info);}
-p{color: var(--color-dark-varient);}
-b{color: var(--color-dark);}
-
-.primary{color: var(--color-primary);}
-.danger{color: var(--color-danger);}
-.success{color: var(--color-success)}
-.warning{color: var(--color-warning);}
-
-.container{
-    position: relative;
-    display: grid;
-    width: 93%;
-    margin: 0 3rem;
-    gap: 1.8rem;
-    grid-template-columns: 14rem auto 23rem;
-    padding-top: 4rem;
-
+* {
+  color: var(--color-dark);
+}
 img {
   display: block;
   width: 100%;

@@ -8,7 +8,6 @@ class Chatbox{
     
         this.state = false;
         this.messages = [];
-        this.chatbotMessageCount = 0;
 
     }
 
@@ -89,6 +88,7 @@ class Chatbox{
     updateChatText(chatbox){    
         var html = '';
         const newMessage = this.messages[this.messages.length - 1]
+
         if (newMessage.name === "Chatbot") {
             console.log('First if');
             html += '<div class="messages__item--visitor"><i class="fa-solid fa-brain"></i><div class="messages__item_chatbot_text">' + newMessage.message + '</div></div>'
@@ -96,32 +96,12 @@ class Chatbox{
             console.log('else');               
             html += '<div class="messages__item messages__item--operator">' + newMessage.message + '</div>'
         }
-        this.chatbotMessageCount++;
-        console.log('chatbot count ',this.chatbotMessageCount);
-        // if (this.chatbotMessageCount === 5) {
-        //     this.showPopup();
-        // }
 
         const chatmessages = chatbox.querySelector('.chatbox__messages');
         //  console.log(chatmessages.innerHTML);
         chatmessages.innerHTML += html;
         chatmessages.scrollTop = chatmessages.scrollHeight;
     }
-
-    // showPopup() {
-    //     // Assuming you have a pop-up element with id 'popup'
-    //     const popup = document.getElementById('popup');
-    //     if (popup) {
-    //         popup.classList.remove('hidden');
-    //     }
-    // }
-    
-    // closePopup() {
-    //     const popup = document.getElementById('popup');
-    //     if (popup) {
-    //         popup.classList.add('hidden');
-    //     }
-    // }
 
 }
 
