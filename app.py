@@ -93,7 +93,7 @@ def predict():
     if 'chatbot' in session:
         chatbot = session['chatbot']
     else:
-        chatbot = Chatbot(name="paul", course_code="CIT594", topic="Iterators in Java")
+        chatbot = Chatbot(name="paul", course_code="CIT594", topic={ 'topic_name': "Iterators in Java", 'description': "How to use iterators for different kind of Collections in Java" })
         session['chatbot'] = chatbot
     text = request.get_json().get("message")
     response, end = chatbot.get_response(text)
