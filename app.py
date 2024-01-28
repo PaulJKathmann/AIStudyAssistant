@@ -175,9 +175,9 @@ def logout():
 def update_prompt():
     data = request.json
     topic_name = data['topicName']
-    topic_description = data['topicDescription']
+    #topic_description = data['topicDescription']
     course_code = data['course_code']
-    print(f"topic_name {topic_name}, topic_description {topic_description}")
+    print(f"topic_name {topic_name}")
 
     # error handling in case the prompt name is invalid
     if not topic_name:

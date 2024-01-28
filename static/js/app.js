@@ -91,7 +91,7 @@ class Chatbox{
 
         if (newMessage.name === "Chatbot") {
             console.log('First if');
-            html += '<div class="messages__item--visitor"><i class="fa fa-robot chat-icon"></i><div class="messages__item_chatbot_text">' + newMessage.message + '</div></div>'
+            html += '<div class="messages__item--visitor"><i class="fa-solid fa-brain"></i><div class="messages__item_chatbot_text">' + newMessage.message + '</div></div>'
         } else {
             console.log('else');               
             html += '<div class="messages__item messages__item--operator">' + newMessage.message + '</div>'

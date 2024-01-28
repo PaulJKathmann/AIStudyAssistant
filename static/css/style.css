@@ -93,7 +93,7 @@ body {
 }
 
 .message-bot {
-    background-color: #e0e0e0; /* Different background for bot messages */
+    background-color: #70C1B3; /* Different background for bot messages */
     text-align: left;
 }
 
@@ -148,7 +148,7 @@ body {
     border-top-left-radius: 20px;
     border-top-right-radius: 20px;
     border-bottom-right-radius: 20px;
-    background: lightgrey;
+    background: #70C1B3;
     max-width: 60.6%;
     width: fit-content;
     margin-top: 10px;
@@ -205,7 +205,7 @@ body {
 }
 
 /* If you're using a Font Awesome icon, you may want to adjust the font-size instead of width and height */
-.fa-robot {
+.fa-brain {
     font-size: 20px;
     margin-right: 12px;
 }
@@ -364,14 +364,14 @@ padding: 0.5rem 0.7rem;
 /* prompt selection sidebar */
 .topic-selection {
     width: 250px; /* Adjust the width as necessary */
-    background-color: #333; /* Sidebar color */
+    background-color: #B7E1D9; /* Sidebar color */
     padding: 20px;
     overflow-y: auto; /* Allows scrolling if content is too long */
 }
 
 .topic-selection-header {
     margin-bottom: 1rem; /* Add space below the header */
-    color: #ddd;
+    color: #000;
 }
 
 .topic-list {
@@ -383,7 +383,7 @@ padding: 0.5rem 0.7rem;
     border-radius: 8px; /* Rounded corners for each item */
     padding: 1rem; /* Space inside each item */
     margin-bottom: 1rem; /* Space between items */
-    border: #ddd 1px solid; /* Grey border */
+    border: #000 1px solid; /* Grey border */
 }
 
 .topic-item.selected {
@@ -395,13 +395,13 @@ padding: 0.5rem 0.7rem;
     font-size: 1.1rem; /* Slightly larger font size for title */
     font-weight: bold; /* Make the title bold */
     margin-bottom: 0.5rem; /* Space between title and description */
-    color: #ddd;
+    color: #000;
 }
 
 .topic-description {
     font-size: 0.9rem; /* Smaller font size for description */
     margin-bottom: 0; /* No additional margin needed here */
-    color: #ddd;
+    color: #000;
     margin-bottom: 16px;
 }
 

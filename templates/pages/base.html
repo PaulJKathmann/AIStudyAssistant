@@ -18,12 +18,12 @@
     {% include 'layouts/navbar.html' %}
     <div class="chat-interface">
         <div class="topic-selection">
-            <h4 class="topic-selection-header">Select Topic</h4>
+            <h4 class="topic-selection-header"></h4>
             <ul class="topic-list">
                 {% for topic in topics %}
                 <li class="topic-item">
                     <h5 class="topic-title">{{ topic.topic_name }}</h5>
-                    <p class="topic-description">{{ topic.description }}</p>
+                    <!-- <p class="topic-description">{{ topic.description }}</p>}} -->
                 </li>
                 
                 {% endfor %}
