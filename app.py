@@ -64,7 +64,11 @@ def login_required(test):
 
 @app.route('/')
 def home():
-    return render_template('pages/coursesLandingPage.html')
+    courses = course_db.find({})
+    
+    # Sum the points from each course
+    total_points = sum(course.get('points', 0) for course in courses)
+    return render_template('pages/coursesLandingPage.html',points=total_points)
 
 
 @app.route('/about')

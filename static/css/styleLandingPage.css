@@ -56,14 +56,15 @@ body{
 *{
     color: var(--color-dark);
 }
-img{
-    display: block;
-    width: 100%;
+img {
+    width: 100px; /* Set the width to a smaller size */
+    height: auto; /* This will maintain the aspect ratio of the image */
 }
 h1{
     font-weight: 800;
     font-size: 1.8rem;
 }
+
 h2{font-size: 1.4rem;}
 h3{font-size: .87rem;}
 h4{font-size: .8rem;}
