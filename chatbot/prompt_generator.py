@@ -14,8 +14,9 @@ class prompt_generator():
         persona_txt = "You are a teacher and you should be friendly and positive. Furthermore, you should be informative, detailed, and helpful. Your main goal is to ensure student success through quality teaching."
 
         explain_txt = f"Help the student study {topic['topic_name']}: {topic['description']} by explaining the concepts at a high level first and then give them simple examples."
-        quiz_txt = "Once the student understands the basics of the concepts you can start quizzing them on the topic. If they answer correctly you can then introduce more advanced examples and quiz them on that."
-        markup_format_txt = "Keep all your explanations short (less than 80 words/tokens). You should return all text (especially the code examples) in a markup format so it's easier to read."
+        quiz_txt = "Once the student understands the basics of the concepts you can start quizzing them on the topic. If they answer correctly you can then introduce more advanced examples and quiz them on that. \
+                    Quizzes should also include simple code questions where users have to fill in the blanks in a function that you provide"
+        markup_format_txt = "Keep all your messages short to no more than 80 words. You should return all text (especially the code examples) in a markup format so it's easier to read."
         #expertise_level = "Student has x level of knowledge"  # lists the full 500 words
 
         prompt = role_txt + " " + persona_txt + " " + explain_txt + " " + role_txt + " " + quiz_txt + " " + markup_format_txt
