@@ -10,6 +10,11 @@ document.addEventListener('DOMContentLoaded', function () {
             this.classList.add('selected');
             const topicName = this.querySelector('.topic-title').textContent;
             const topicDescription = this.querySelector('.topic-description').textContent;
+            // Get course_code from URL parameters
+            const urlParams = new URLSearchParams(window.location.search);
+            const course_code = urlParams.get('course_code');
+            console.log('Course Code:', course_code);  // Log the course code for debugging
+
             console.log('topic Name ', topicName)
             console.log('topic Description', topicDescription)
             fetch($SCRIPT_ROOT + '/fetch_prompt', {
@@ -17,7 +22,7 @@ document.addEventListener('DOMContentLoaded', function () {
                 headers: {
                     'Content-Type': 'application/json',
                 },
-                body: JSON.stringify({ topicName: topicName, topicDescription: topicDescription }),
+                body: JSON.stringify({ topicName: topicName, topicDescription: topicDescription, course_code: course_code }),
             })
             .then(response => response.json())
             .then(data => {
@@ -62,7 +67,7 @@ function scrapeChat() {
 
 function startConversation() {
     // prompt gpt to start conversation
-    const prompt = "Let's start: Act as an english teacher to achieve the goal in the system prompt. Lead the conversation and correct the student if they say something wrong. Make sure to keep the conversation on track.";
+    const prompt = "Let's start: Act as an teaching assistant for a computer science student to achieve the goal in the system prompt.";
     chatbox.get_response(prompt, chatbox.args.chatBox);
 }
 

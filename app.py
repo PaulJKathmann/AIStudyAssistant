@@ -89,7 +89,7 @@ def predict():
     if 'chatbot' in session:
         chatbot = session['chatbot']
     else:
-        chatbot = Chatbot(name="paul")
+        chatbot = Chatbot(name="paul", topic="Java Collections")
         session['chatbot'] = chatbot
     text = request.get_json().get("message")
     response, end = chatbot.get_response(text)
@@ -155,25 +155,52 @@ def logout():
 
 @app.route('/fetch_prompt', methods=['POST'])
 def update_prompt():
-    chatbot = session['chatbot']
-    print('error in fetch_prompt')
     data = request.json
     topic_name = data['topicName']
-    file_id= None
+    topic_description = data['topicDescription']
+    course_code = data['course_code']
+    print(f"topic_name {topic_name}, topic_description {topic_description}")
+
     # error handling in case the prompt name is invalid
     if not topic_name:
+        print('Invalid prompt name')
         return jsonify({'message': 'Invalid prompt name'}), 400
 
-    # Logic to find and set the corresponding system prompt and update the conversation manager
-    topic = course_db.find_one({"topic_name": topic_name})
+    # Fetch the course from the database
+    course = course_db.find_one({'course_code': course_code})
+    if not course:
+        print(f"Course not found: {course_code}")
+        return jsonify({'message': f"Course not found {course_code}"}), 404
+    
+    # get the course topic
+    for t in course['topics']:
+        if t['topic_name'] == topic_name:
+            topic = t
+            break
+        else:
+            None
+    if not topic:
+        print(f"Topic not found: {topic_name}")
+        return jsonify({'message': 'Topic not found'}), 404
+    
+    print(f"Topic found: {topic}")
+    print("Updating prompt...\n\n")
+    # setup a new chatbot instance since the prompt has changed
+    chatbot = Chatbot(name="paul", topic=topic)
+    session['chatbot'] = chatbot
+    if chatbot and session['chatbot']:
+        print(f"Chatbot prompt updated successfully: chatbot {chatbot}; session {session['chatbot']}")
     if topic:
         #full_prompt = prompt.get('full_prompt')
-        chatbot.prompt = prompt_generator(chatbot.user).generate_prompt()
+        chatbot.prompt = prompt_generator(chatbot.user).generate_prompt(topic)
         # Empty messages and conversation_cache
         chatbot.cm.clear_cm()
         # reinstantiate the conversation manager with new prompt
         chatbot.cm = conversation_manager(prompt=chatbot.prompt)
-        return jsonify({'message': 'Prompt updated successfully','file_id': file_id}), 200
+        session['chatbot'] = chatbot  # Reassign the modified chatbot to the session
+        session.modified = True 
+        print(f"Chatbot prompt updated successfully: {chatbot.prompt}")
+        return jsonify({'message': 'Prompt updated successfully'}), 200
     else:
         return jsonify({'message': 'Prompt not found'}), 404
 
