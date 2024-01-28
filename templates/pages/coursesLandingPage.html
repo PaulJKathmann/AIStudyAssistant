@@ -37,9 +37,7 @@
                     <h5 id="pointsDisplay">Points: <span id="pointsValue">{{ points }}</span></h5>
                   
                     <h5>Email</h5>
-                    <p>unknown@gmail.com</p>
-                    <h5>Address</h5>
-                    <p>-</p>
+                    <p>Nimisha@gmail.com</p>
                 </div>
             </div>
         </aside>
@@ -49,16 +47,14 @@
             <div class="subjects">
                 <div class="eg">
                     <span class="material-icons-sharp">architecture</span>
-                    <a href="{{ url_for('chatbot', course_code='CIT595') }}">
+                    <a href="{{ url_for('chatbot', course_code='CIT594') }}">
 
                     <h3>CIT 594</h3>
                     <h2>12/14</h2>
                     </a>
                     <div class="progress">
-                        <svg width="76" height="76" viewBox="0 0 76 76">
-                            <circle cx="38" cy="38" r="36"></circle>
-                        </svg>
-                        <div class="number"><p>86%</p></div>
+                        <svg><circle cx="38" cy="38" r="36"></circle></svg>
+                        <div class="number"><p>93%</p></div>
                     </div>
                     <small class="text-muted">Last 24 Hours</small>
                 </div>
@@ -121,23 +117,23 @@
         </main>
 
        <div class="right">
-            <!-- <div class="announcements">
-                <h2>Content</h2>
-                <div class="updates">
-                    <div class="message">
-                        <p> <b>Academic</b> Content</p>
-                        <small class="text-muted">-</small>
-                    </div>
-                    <div class="message">
-                        <p> <b>Co-curricular</b> Content</p>
-                        <small class="text-muted">-</small>
-                    </div>
-                    <div class="message">
-                        <p> <b>Examination</b> Content</p>
-                        <small class="text-muted">-</small>
-                    </div>
+        <div class="leaves">
+            <h2>Group Chats</h2>
+            <div class="teacher">
+                <div class="profile-photo"><img src="../static/img/groupchat.png" alt=""></div>
+                <div class="info">
+                    <h3>Team Infinity Loopers</h3>
+                    <small class="text-muted">Chimezie, Mikhael, Paul</small>
                 </div>
-            </div> -->
+            </div>
+            <div class="teacher">
+                <div class="profile-photo"><img src="../static/img/groupchat.png" alt=""></div>
+                <div class="info">
+                    <h3>Doubt Group for 596</h3>
+                    <small class="text-muted">Jeremie, Joey, Manvi</small>
+                </div>
+            </div>            
+        </div>
 
             <div class="leaves">
                 <h2>Course Instructors</h2>
@@ -195,7 +191,7 @@
             const row = tableBody.insertRow();
             
             // Always display the first three images
-            for (let i = 0; i < 3; i++) {
+            for (let i = 0; i < 2; i++) {
                 const cell = row.insertCell();
                 const img = document.createElement('img');
                 img.src = imageUrls[i];
@@ -204,22 +200,17 @@
             }
             
             // Display the fourth image if points are equal to or exceed the threshold
-            const threshold = 40; // Set your threshold for points
-            if (points >= threshold) {
+            
+            let array = [60,75,90]
+            for(let i=0;i<2;i++) 
+            if (points >= array[i]) {
                 const cell = row.insertCell();
                 const img = document.createElement('img');
-                img.src = imageUrls[3];
+                img.src = imageUrls[i+2];
                 img.alt = 'Description of image 4'; // Alt text for the fourth image
                 cell.appendChild(img);
             }
-            threshold = 45;
-            if (points >= threshold) {
-                const cell = row.insertCell();
-                const img = document.createElement('img');
-                img.src = imageUrls[3];
-                img.alt = 'Description of image 4'; // Alt text for the fourth image
-                cell.appendChild(img);
-            }
+
         }
         
         // Initial call to display images
