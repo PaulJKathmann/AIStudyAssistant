@@ -50,8 +50,7 @@ def login_required(test):
 
 @app.route('/')
 def home():
-    return render_template('pages/placeholder.home.html')
-
+    return render_template('pages/coursesLandingPage.html')
 
 @app.route('/about')
 def about():

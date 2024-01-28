@@ -1,0 +1,102 @@
+@import url("https://fonts.googleapis.com/css2?family=Cairo:wght@200;300;400;500;600;700;800;900&family=Poppins:wght@300;400;500;600;700;800&display=swap");
+root {
+  --color-primary: #7380ec;
+  --color-danger: #ff7782;
+  --color-success: #41f1b6;
+  --color-warning: #ffbb55;
+  --color-white: #fff;
+  --color-info: #7d8da1;
+  --color-dark: #363949;
+  --color-light: rgba(132, 139, 200, 0.18);
+  --color-dark-varient: #677483;
+  --color-background: #f6f6f9;
+
+  --card-border-radius: 2rem;
+  --border-radius-1: 0.4rem;
+  --border-radius-2: 1.2rem;
+
+  --card-padding: 1.8rem;
+  --box-shadow: 0 2rem 3rem var(--color-light) !important;
+}
+
+body {
+  font-family: "Poppins", sans-serif;
+  font-size: 0.88rem;
+  background: var(--color-background) !important;
+  user-select: none;
+  overflow-x: hidden;
+  color: var(--color-dark) !important;
+}
+
+/* Add your styles for the login page here */
+.form {
+  max-width: 400px;
+  margin: auto;
+  padding: 20px;
+  background-color: var(--color-white) !important;
+  border-radius: var(--card-border-radius) !important;
+  box-shadow: var(--box-shadow) !important;
+  margin-top: 50px;
+}
+
+.form-heading {
+  font-size: 1.8rem;
+  font-weight: 800;
+  margin-bottom: 20px;
+  color: var(--color-primary) !important;
+}
+
+.form-control {
+  width: 100%;
+  padding: 10px;
+  margin-bottom: 15px;
+  border: 1px solid var(--color-light) !important;
+  border-radius: var(--border-radius-1) !important;
+}
+
+.btn-primary {
+  background-color: var(--color-primary) !important;
+  color: var(--color-white) !important;
+  padding: 10px;
+  border: none;
+  border-radius: var(--border-radius-1) !important;
+  cursor: pointer;
+}
+
+.btn-primary:hover {
+  background-color: var(--color-dark);
+}
+
+.d-flex {
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+}
+
+.mt-3 {
+  margin-top: 15px;
+}
+
+.float-right {
+  float: right;
+}
+
+.text-center {
+  text-align: center;
+}
+
+a {
+  color: var(--color-primary) !important;
+}
+
+a:hover {
+  text-decoration: underline;
+  color: var(--color-dark) !important;
+}
+
+/* Media Queries */
+@media screen and (max-width: 768px) {
+  .form {
+    margin-top: 20px;
+  }
+}
