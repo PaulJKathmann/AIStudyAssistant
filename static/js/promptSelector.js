@@ -1,6 +1,17 @@
 document.addEventListener('DOMContentLoaded', function () {
     const topics = document.querySelectorAll('.topic-item');
 
+    // Insert the course_code into the .topic-selection-header element
+    const courseCodeElement = document.querySelector('.topic-selection-header');
+    if (courseCodeElement) {
+        // Get course_code from URL parameters
+        const urlParams = new URLSearchParams(window.location.search);
+        const course_code = urlParams.get('course_code');
+
+        // Set the text content of the element
+        courseCodeElement.textContent = course_code;
+    }
+
     console.log('topic before ',topics )
     topics.forEach(topic => {
        // console.log('topic ', topic)
@@ -9,20 +20,20 @@ document.addEventListener('DOMContentLoaded', function () {
             topics.forEach(p => p.classList.remove('selected'));
             this.classList.add('selected');
             const topicName = this.querySelector('.topic-title').textContent;
-            const topicDescription = this.querySelector('.topic-description').textContent;
+            console.log("topic name", topicName);
+            //const topicDescription = this.querySelector('.topic-description').textContent;
+            //console.log("topic description", topicDescription);
             // Get course_code from URL parameters
             const urlParams = new URLSearchParams(window.location.search);
             const course_code = urlParams.get('course_code');
             console.log('Course Code:', course_code);  // Log the course code for debugging
 
-            console.log('topic Name ', topicName)
-            console.log('topic Description', topicDescription)
             fetch($SCRIPT_ROOT + '/fetch_prompt', {
                 method: 'POST',
                 headers: {
                     'Content-Type': 'application/json',
                 },
-                body: JSON.stringify({ topicName: topicName, topicDescription: topicDescription, course_code: course_code }),
+                body: JSON.stringify({ topicName: topicName, course_code: course_code }),
             })
             .then(response => response.json())
             .then(data => {

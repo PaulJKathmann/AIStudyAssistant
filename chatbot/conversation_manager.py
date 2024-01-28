@@ -25,7 +25,6 @@ class conversation_manager():
         # which cannot be modified, but we can only add conversations to it.To facilitate
 
     # Send input_text to GPT and get the generated response.
-
     def get_gpt_response(self, input_text, max_response_tokens=500, max_retries=3, base_wait_time=2):
 
         overall_max_tokens = 4096
@@ -34,12 +33,12 @@ class conversation_manager():
         formatted_query = {"role": "user", "content": input_text}
 
         self.messages.append(formatted_query)
+
         # Adding the query to the cache
         self.conversation_cache.append(formatted_query)
-        # print(self.messages)
+
         # To check if the prompt has tokens within the limit
         token_count = num_tokens_from_messages(self.messages)
-        # print(f"Token_Count: {token_count}")
 
         while token_count > prompt_max_tokens:
             print(f"Deleting the message: { self.messages[1]}")
@@ -51,7 +50,7 @@ class conversation_manager():
             try:
                 print(f"sending to chatgpt: {self.messages}")
                 response = openai.chat.completions.create(
-                    model="gpt-3.5-turbo-1106", temperature=0.8, max_tokens=500, messages=self.messages)                
+                    model="gpt-3.5-turbo-1106", temperature=0.8, max_tokens=250, messages=self.messages)                
                 # the response from the assistant is saved into the chat history(messages)
                 response_json = { "role": "assistant", "content": response.choices[0].message.content }
                 self.messages.append(response_json)
