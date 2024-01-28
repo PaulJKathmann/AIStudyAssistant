@@ -1,14 +1,15 @@
 <!DOCTYPE html>
 <html lang="en">
-  <head>
-    <meta charset="UTF-8" />
-    <meta http-equiv="X-UA-Compatible" content="IE=edge" />
-    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+<head>
+    <meta charset="UTF-8">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>Student Dashboard</title>
     <link rel="shortcut icon" href="./images/logo.png">
     <link href="https://fonts.googleapis.com/icon?family=Material+Icons+Sharp" rel="stylesheet">
-    <link rel="stylesheet" href="/static/css/styleLandingPage.css">
     <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/bootstrap@4.0.0/dist/css/bootstrap.min.css" integrity="sha384-Gn5384xqQ1aoWXA+058RXPxPg6fy4IWvTNh0E263XmFcJlSAwiGgFAW/dAiS6JXm" crossorigin="anonymous">
+
+    <link rel="stylesheet" href="/static/css/styleLandingPage.css">
 
     
 </head>
@@ -16,143 +17,226 @@
 
 
         {% include 'layouts/navbar.html' %}
-
     <div class="container">
-      <aside>
-        <div class="profile">
-          <div class="top">
-            <div class="profile-photo">
-              <img src="/Users/nimishamalik/Desktop/student user.png" alt="" />
+        <aside>
+            <div class="profile">
+                <div class="top">
+                    <div class="profile-photo">
+			<img src="../static/img/uniLogo.png" alt="">
+                    </div>
+                    <div class="info">
+                        <p>Hey, <b>Nimisha</b> </p>
+                        <small class="text-muted">12102030</small>
+                    </div>
+                </div>
+                <div class="about">
+                    <h5>Course</h5>
+                    <p>Masters in Computer and Information Technology</p>
+                    <h5>School</h5>
+                    <p>SEAS</p>
+                    <h5 id="pointsDisplay">Points: <span id="pointsValue">{{ points }}</span></h5>
+                  
+                    <h5>Email</h5>
+                    <p>unknown@gmail.com</p>
+                    <h5>Address</h5>
+                    <p>-</p>
+                </div>
             </div>
-            <div class="info">
-              <p>Hey, <b>Nimisha</b></p>
-              <small class="text-muted">12102030</small>
-            </div>
-          </div>
-          <div class="about">
-            <h5>Course</h5>
-            <p>Masters in Computer and Information Technology</p>
-            <h5>School</h5>
-            <p>SEAS</p>
-            <h5>Points</h5>
-            <p>100</p>
-            <h5>Email</h5>
-            <p>unknown@gmail.com</p>
-            <h5>Address</h5>
-            <p>-</p>
-          </div>
-        </div>
-      </aside>
+        </aside>
 
-      <main>
-        <h1>Welcome back! What do you want to learn today?</h1>
-        <div class="subjects">
-          <div class="eg">
-            <span class="material-icons-sharp">architecture</span>
-            <h3>CIT 594</h3>
-            <h2>12/14</h2>
-            <div class="progress">
-              <svg><circle cx="38" cy="38" r="36"></circle></svg>
-              <div class="number"><p>86%</p></div>
-            </div>
-            <small class="text-muted">Last 24 Hours</small>
-          </div>
-          <div class="mth">
-            <span class="material-icons-sharp">functions</span>
-            <h3>CIT 595</h3>
-            <h2>27/29</h2>
-            <div class="progress">
-              <svg><circle cx="38" cy="38" r="36"></circle></svg>
-              <div class="number"><p>93%</p></div>
-            </div>
-            <small class="text-muted">Last 24 Hours</small>
-          </div>
-          <div class="cs">
-            <span class="material-icons-sharp">computer</span>
-            <h3>CIT 596</h3>
-            <h2>27/30</h2>
-            <div class="progress">
-              <svg><circle cx="38" cy="38" r="36"></circle></svg>
-              <div class="number"><p>81%</p></div>
-            </div>
-            <small class="text-muted">Last 24 Hours</small>
-          </div>
-        </div>
+        <main>
+            <h1>Welcome back! What do you want to learn today?</h1>
+            <div class="subjects">
+                <div class="eg">
+                    <span class="material-icons-sharp">architecture</span>
+                    <a href="{{ url_for('chatbot', course_code='CIT595') }}">
 
-        <div class="timetable" id="timetable">
-          <div>
-            <span id="prevDay">&lt;</span>
-            <h2>Extra</h2>
-            <span id="nextDay">&gt;</span>
-          </div>
-          <span class="closeBtn" onclick="timeTableAll()">X</span>
-          <table>
-            <thead>
-              <tr>
-                <th>-</th>
-                <th>-</th>
-                <th>-</th>
-                <th></th>
-              </tr>
-            </thead>
-            <tbody></tbody>
-          </table>
-        </div>
-      </main>
+                    <h3>CIT 594</h3>
+                    <h2>12/14</h2>
+                    </a>
+                    <div class="progress">
+                        <svg width="76" height="76" viewBox="0 0 76 76">
+                            <circle cx="38" cy="38" r="36"></circle>
+                        </svg>
+                        <div class="number"><p>86%</p></div>
+                    </div>
+                    <small class="text-muted">Last 24 Hours</small>
+                </div>
+            </a>
 
-      <div class="right">
-        <div class="announcements">
-          <h2>Content</h2>
-          <div class="updates">
-            <div class="message">
-              <p><b>Academic</b> Content</p>
-              <small class="text-muted">-</small>
-            </div>
-            <div class="message">
-              <p><b>Co-curricular</b> Content</p>
-              <small class="text-muted">-</small>
-            </div>
-            <div class="message">
-              <p><b>Examination</b> Content</p>
-              <small class="text-muted">-</small>
-            </div>
-          </div>
-        </div>
+                <div class="mth">
+                    <span class="material-icons-sharp">functions</span>
+                    <a href="{{ url_for('chatbot', course_code='CIT595') }}">
 
-        <div class="leaves">
-          <h2>Course Instructors</h2>
-          <div class="teacher">
-            <div class="profile-photo">
-              <img src="/Users/nimishamalik/Desktop/instructor.jpg" alt="" />
+                    <h3>CIT 595</h3>
+                    <h2>27/29</h2>
+                </a>
+                    <div class="progress">
+                        <svg><circle cx="38" cy="38" r="36"></circle></svg>
+                        <div class="number"><p>93%</p></div>
+                    </div>
+                   
+                    <small class="text-muted">Last 24 Hours</small>
+                </div>
+
+            
+                <div class="mth">
+                    <span class="material-icons-sharp">computer</span>
+                    <a href="{{ url_for('chatbot', course_code='CIT596') }}" class="mth" >
+                    <h3>CIT 596</h3>
+                    <h2>27/30</h2>
+                </a>
+
+                    <div class="progress">
+                        <svg><circle cx="38" cy="38" r="36"></circle></svg>
+                        <div class="number"><p>81%</p></div>
+                    </div>
+                    <small class="text-muted">Last 24 Hours</small>
+                </div>
+            
             </div>
-            <div class="info">
-              <h3>Harry Smith and Eric Fouh</h3>
-              <small class="text-muted">CIT 594</small>
+
+            <div class="timetable" id="timetable">
+                <div>
+                    <span id="prevDay">&lt;</span>
+                    <h2>Your Pennimals</h2>
+                    <span id="nextDay">&gt;</span>
+                </div>
+                <span class="closeBtn" onclick="timeTableAll()">X</span>
+                <table>
+                    <thead>
+                        <tr>
+                            <th></th>
+                        </tr>
+                    </thead>
+                    <tbody id="imageTableBody">
+                        <tr>
+                            <!-- Each image in its own cell -->
+                    
+                            <!-- Add more <td> tags with <img> tags inside for more images -->
+                        </tr>
+                    </tbody>
+                </table>
             </div>
-          </div>
-          <div class="teacher">
-            <div class="profile-photo">
-              <img src="/Users/nimishamalik/Desktop/instructor.jpg" alt="" />
+        </main>
+
+       <div class="right">
+            <!-- <div class="announcements">
+                <h2>Content</h2>
+                <div class="updates">
+                    <div class="message">
+                        <p> <b>Academic</b> Content</p>
+                        <small class="text-muted">-</small>
+                    </div>
+                    <div class="message">
+                        <p> <b>Co-curricular</b> Content</p>
+                        <small class="text-muted">-</small>
+                    </div>
+                    <div class="message">
+                        <p> <b>Examination</b> Content</p>
+                        <small class="text-muted">-</small>
+                    </div>
+                </div>
+            </div> -->
+
+            <div class="leaves">
+                <h2>Course Instructors</h2>
+                <div class="teacher">
+                    <div class="profile-photo"><img src="../static/img/smith.jpeg" alt=""></div>
+                    <div class="info">
+                        <h3>Harry Smith</h3>
+                        <small class="text-muted">CIT 594</small>
+                    </div>
+                </div>
+                <div class="teacher">
+                    <div class="profile-photo"><img src="../static/img/travis.jpeg" alt=""></div>
+                    <div class="info">
+                        <h3>Travis McGaha</h3>
+                        <small class="text-muted">CIT 595</small>
+                    </div>
+                </div>
+                <div class="teacher">
+                    <div class="profile-photo"><img src="../static/img/arvind.jpeg" alt=""></div>
+                    <div class="info">
+                        <h3>Arvind Bhusrumath</h3>
+                        <small class="text-muted">CIT 596</small>
+                    </div>
+                </div>
             </div>
-            <div class="info">
-              <h3>Travis McGaha</h3>
-              <small class="text-muted">CIT 595</small>
-            </div>
-          </div>
-          <div class="teacher">
-            <div class="profile-photo">
-              <img src="/Users/nimishamalik/Desktop/instructor.jpg" alt="" />
-            </div>
-            <div class="info">
-              <h3>Arvind Bhusrumath</h3>
-              <small class="text-muted">CIT 596</small>
-            </div>
-          </div>
+
         </div>
-      </div>
     </div>
 
     <script src="timeTable.js"></script>
     <script src="app.js"></script>
-  </body>
+    <script>
+        // Assume we get the number of points from somewhere
+        function getPoints() {
+        const pointsSpan = document.getElementById('pointsValue');
+        return parseInt(pointsSpan.textContent) || 0; // Parse the number from the text content, default to 0 if it's not a number
+    }
+        
+        // Image URLs
+        const imageUrls = [
+            '../static/img/image1.png',
+            '../static/img/image2.png',
+            '../static/img/image3.png',
+            '../static/img/image4.png',
+            '../static/img/image5.png'
+        ];
+        
+        // Function to display images based on points
+        function displayImages() {
+            const tableBody = document.getElementById('imageTableBody');
+            tableBody.innerHTML = ''; // Clear existing images
+            const points = getPoints()
+            console.log('points ', points)
+            // Create a new row for the images
+            const row = tableBody.insertRow();
+            
+            // Always display the first three images
+            for (let i = 0; i < 3; i++) {
+                const cell = row.insertCell();
+                const img = document.createElement('img');
+                img.src = imageUrls[i];
+                img.alt = 'Description of image ' + (i + 1); // Always add alt text for accessibility
+                cell.appendChild(img);
+            }
+            
+            // Display the fourth image if points are equal to or exceed the threshold
+            const threshold = 40; // Set your threshold for points
+            if (points >= threshold) {
+                const cell = row.insertCell();
+                const img = document.createElement('img');
+                img.src = imageUrls[3];
+                img.alt = 'Description of image 4'; // Alt text for the fourth image
+                cell.appendChild(img);
+            }
+            threshold = 45;
+            if (points >= threshold) {
+                const cell = row.insertCell();
+                const img = document.createElement('img');
+                img.src = imageUrls[3];
+                img.alt = 'Description of image 4'; // Alt text for the fourth image
+                cell.appendChild(img);
+            }
+        }
+        
+        // Initial call to display images
+        displayImages();
+        
+        // Example function to simulate earning points
+        function addPoints(newPoints) {
+        const pointsSpan = document.getElementById('pointsValue');
+        let currentPoints = getPoints();
+        currentPoints += newPoints;
+        pointsSpan.textContent = currentPoints; // Update the displayed points
+        displayImages(); // Update the display whenever points change
+    }
+        
+        // Simulate adding points after 5 seconds
+       
+    </script>
+    
+</body>
 </html>
