@@ -5,7 +5,7 @@ class Chatbox{
             chatBox: document.querySelector(".chatbox__support"),
             sendButton: document.querySelector(".send__button")
         }
-    
+        this.messageCounter = 0;
         this.state = false;
         this.messages = [];
 
@@ -99,11 +99,41 @@ class Chatbox{
             console.log('else');               
             html += '<div class="messages__item messages__item--operator">' + messageHtml + '</div>'
         }
+        this.messageCounter++;
+
+        // Check if counter is 4 and display popup
+        if (this.messageCounter === 4) {
+            html = html+this.displayPopup();
+            this.messageCounter = 0; // Reset the counter
+        }
 
         const chatmessages = chatbox.querySelector('.chatbox__messages');
         //  console.log(chatmessages.innerHTML);
         chatmessages.innerHTML += html;
         chatmessages.scrollTop = chatmessages.scrollHeight;
+        
+    }
+
+    displayPopup() {
+        // Create a new div element for the popup
+        console.log('inside display popup');
+        let popup = document.createElement("div");
+
+        // Set the content of the popup
+        popup.innerHTML = `
+        <div class="popup alert alert-dismissible fade show" role="alert">
+            Congratulations! You unlocked a new Pennimal
+            <button type="button" class="close" data-dismiss="alert" aria-label="Close">
+                <span aria-hidden="true">&times;</span>
+            </button>
+        </div>`;
+
+        // Add class for styling
+        popup.classList.add("chatbox-popup");
+
+        // Append the popup to the body
+       // document.body.appendChild(popup);
+        return popup.innerHTML;
     }
 
 }
