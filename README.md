@@ -4,6 +4,8 @@
 
 The AI Study Assistant is a web application designed to provide students with a study assistant that is always available, offers motivation through gamification, and adapts to the speed and needs of the student with personalized interactions. Additionally, future plans include making the assistant more collaborative by allowing students to chat with the AI tutor in a single chat group.
 
+Try it out: https://mcit-study-ai-44a1217b845c.herokuapp.com/chatbot?course_code=CIT594
+
 ## Getting Started
 
 ### Prerequisites
